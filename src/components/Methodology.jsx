@@ -66,21 +66,24 @@ export default function Methodology() {
             return (
               <div 
                 key={idx} 
-                className="methodology-card p-6 rounded-2xl bg-slate-950/90 border border-slate-800/80 card-hover-effect shadow-xl relative group"
+                className="methodology-card p-6 rounded-2xl bg-slate-950/90 border border-slate-800/80 card-hover-effect shadow-xl relative group overflow-hidden"
               >
-                <div className="flex items-center justify-between mb-4">
-                  <span className="text-2xl font-mono font-black text-slate-700 group-hover:text-cyan-400/50 transition-colors">
+                {/* Llum ambiental subtil en fer hover */}
+                <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/[0.06] via-transparent to-blue-500/[0.04] opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-out pointer-events-none" />
+
+                <div className="flex items-center justify-between mb-4 relative z-10">
+                  <span className="text-2xl font-mono font-black text-slate-700 group-hover:text-cyan-400/60 transition-colors duration-500 ease-out">
                     {step.number}
                   </span>
-                  <div className="p-2.5 rounded-xl bg-slate-900 border border-slate-800 text-cyan-400 group-hover:bg-cyan-500 group-hover:text-slate-950 transition-all">
+                  <div className="p-2.5 rounded-xl bg-slate-900 border border-slate-800 text-cyan-400 group-hover:bg-cyan-500 group-hover:text-slate-950 group-hover:border-cyan-400 group-hover:scale-105 group-hover:shadow-[0_0_15px_rgba(6,182,212,0.35)] transition-all duration-500 ease-out">
                     <Icon className="w-5 h-5" />
                   </div>
                 </div>
 
-                <h3 className="text-base font-heading font-bold text-white mb-2">
+                <h3 className="text-base font-heading font-bold text-white group-hover:text-cyan-300 transition-colors duration-500 ease-out mb-2 relative z-10">
                   {step.title}
                 </h3>
-                <p className="text-xs text-slate-400 leading-relaxed">
+                <p className="text-xs text-slate-400 group-hover:text-slate-300 transition-colors duration-500 ease-out leading-relaxed relative z-10">
                   {step.desc}
                 </p>
               </div>
