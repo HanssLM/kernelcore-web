@@ -43,21 +43,28 @@ export default function Services() {
       const observer = new IntersectionObserver(
         (entries) => {
           entries.forEach((entry) => {
+            const serviceId = entry.target.getAttribute('data-service-id');
+            if (!serviceId) return;
+
             if (entry.isIntersecting) {
-              const serviceId = entry.target.getAttribute('data-service-id');
-              if (serviceId) {
-                setMobileExpanded((prev) => {
-                  if (prev[serviceId]) return prev;
-                  return { ...prev, [serviceId]: true };
-                });
-              }
+              // En entrar a la zona de lectura central, es desplega
+              setMobileExpanded((prev) => ({
+                ...prev,
+                [serviceId]: true
+              }));
+            } else {
+              // Un cop passat (surt per dalt o per baix), es torna a tancar
+              setMobileExpanded((prev) => ({
+                ...prev,
+                [serviceId]: false
+              }));
             }
           });
         },
         {
           root: null,
-          rootMargin: '0px 0px -10% 0px', // Es desplega de forma fluida així que entra a la part visible
-          threshold: 0.1
+          rootMargin: '-10% 0px -15% 0px', // Zona activa de lectura en mòbil
+          threshold: 0.15
         }
       );
 
