@@ -35,35 +35,52 @@ export default function Services() {
 
   // En mòbils: anar desplegant els menús a mesura que l'usuari fa scroll
   useEffect(() => {
-    // Només activar l'IntersectionObserver en pantalles petites (< 1024px)
-    if (typeof window === 'undefined' || window.innerWidth >= 1024) return;
+    if (typeof window === 'undefined') return;
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const serviceId = entry.target.getAttribute('data-service-id');
-            if (serviceId) {
-              setMobileExpanded((prev) => ({
-                ...prev,
-                [serviceId]: true
-              }));
+    const setupObserver = () => {
+      if (window.innerWidth >= 1024) return null;
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              const serviceId = entry.target.getAttribute('data-service-id');
+              if (serviceId) {
+                setMobileExpanded((prev) => {
+                  if (prev[serviceId]) return prev;
+                  return { ...prev, [serviceId]: true };
+                });
+              }
             }
-          }
-        });
-      },
-      {
-        root: null,
-        rootMargin: '0px 0px -20% 0px', // es dispara quan l'element entra al terç central de la pantalla
-        threshold: 0.25
-      }
-    );
+          });
+        },
+        {
+          root: null,
+          rootMargin: '0px 0px -10% 0px', // Es desplega de forma fluida així que entra a la part visible
+          threshold: 0.1
+        }
+      );
 
-    mobileCardsRef.current.forEach((el) => {
-      if (el) observer.observe(el);
-    });
+      mobileCardsRef.current.forEach((el) => {
+        if (el) observer.observe(el);
+      });
 
-    return () => observer.disconnect();
+      return observer;
+    };
+
+    let observerInstance = setupObserver();
+
+    const handleResize = () => {
+      if (observerInstance) observerInstance.disconnect();
+      observerInstance = setupObserver();
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      if (observerInstance) observerInstance.disconnect();
+    };
   }, []);
 
   const toggleMobileItem = (id) => {
@@ -199,6 +216,16 @@ export default function Services() {
 
         {/* ─── VISTA MÒBIL (< lg): Desplegament progressiu en fer SCROLL (amb acordió tàctil) ─── */}
         <div className="lg:hidden space-y-4">
+          <div className="flex items-center justify-between px-2 mb-1">
+            <span className="text-[11px] font-mono text-cyan-400/90 flex items-center gap-1.5">
+              <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
+              Desplegament automàtic en fer scroll
+            </span>
+            <span className="text-[11px] text-slate-500 font-medium">
+              Toca per obrir o tancar
+            </span>
+          </div>
+
           {servicesData.map((service, index) => {
             const ItemIcon = iconMap[service.icon] || Server;
             const isExpanded = !!mobileExpanded[service.id];
@@ -210,8 +237,8 @@ export default function Services() {
                 data-service-id={service.id}
                 className={`rounded-2xl border transition-all duration-500 overflow-hidden ${
                   isExpanded
-                    ? 'bg-slate-900 border-cyan-500/60 shadow-xl shadow-cyan-950/40'
-                    : 'bg-slate-950/80 border-slate-800/80'
+                    ? 'bg-slate-900 border-cyan-500/70 shadow-xl shadow-cyan-950/40 ring-1 ring-cyan-500/30'
+                    : 'bg-slate-950/80 border-slate-800/80 hover:border-slate-700'
                 }`}
               >
                 {/* Capçalera tàctil de cada servei */}
