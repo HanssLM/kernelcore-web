@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" role="img" aria-label="KryptonCore IT">
+  <title>KryptonCore IT</title>
+  <defs>
+    <linearGradient id="kcIconGrad" x1="72" y1="44" x2="440" y2="468" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#22D3EE"/>
+      <stop offset="1" stop-color="#3B82F6"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Hexágono sólido: escala x8 del símbolo maestro, centrado en (256,256) -->
+  <polygon points="256,44 439.6,150 439.6,362 256,468 72.4,362 72.4,150"
+           fill="url(#kcIconGrad)" stroke="url(#kcIconGrad)" stroke-width="24" stroke-linejoin="round"/>
+
+  <!-- K: misma escala x8 -->
+  <g stroke="#FFFFFF" stroke-width="36" stroke-linecap="round">
+    <line x1="202.4" y1="168" x2="202.4" y2="344"/>
+    <line x1="202.4" y1="256" x2="306.4" y2="168"/>
+    <line x1="202.4" y1="256" x2="306.4" y2="344"/>
+  </g>
+
+  <circle cx="306.4" cy="168" r="20.8" fill="#FFFFFF"/>
+  <circle cx="306.4" cy="344" r="20.8" fill="#FFFFFF"/>
+</svg>

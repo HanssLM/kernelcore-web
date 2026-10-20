@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="272" height="64" fill="none" aria-label="KryptonCore IT — Serveis &amp; Sistemes Informàtics" viewBox="0 0 272 64">
+  <title>KryptonCore IT — Serveis &amp; Sistemes Informàtics</title>
+  <defs>
+    <linearGradient id="kcLogoGrad" x1="8" x2="56" y1="6" y2="58" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#67e8f9"/>
+      <stop offset=".45" stop-color="#06b6d4"/>
+      <stop offset="1" stop-color="#3b82f6"/>
+    </linearGradient>
+    <linearGradient id="kcLogoK" x1="25.3" x2="38.3" y1="21" y2="43" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#cffafe"/>
+      <stop offset=".45" stop-color="#22d3ee"/>
+      <stop offset="1" stop-color="#60a5fa"/>
+    </linearGradient>
+    <radialGradient id="kcLogoCore" cx="0" cy="0" r="1" gradientTransform="matrix(0 21 -21 0 29 32)">
+      <stop stop-color="#22d3ee" stop-opacity=".42"/>
+      <stop offset="1" stop-color="#22d3ee" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="kcLogoGlow" width="160%" height="160%" x="-30%" y="-30%" color-interpolation-filters="sRGB">
+      <feGaussianBlur result="b" stdDeviation="1.1"/>
+      <feMerge>
+        <feMergeNode in="b"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <path fill="url(#kcLogoCore)" d="m32 4 24.25 14v28L32 60 7.75 46V18z"/>
+  <g filter="url(#kcLogoGlow)">
+    <path stroke="url(#kcLogoGrad)" stroke-linejoin="round" stroke-width="3" d="m32 4 24.25 14v28L32 60 7.75 46V18z"/>
+    <path stroke="url(#kcLogoK)" stroke-linecap="round" stroke-width="4.5" d="M25.3 21v22"/>
+    <path stroke="url(#kcLogoK)" stroke-linecap="round" stroke-width="4.5" d="m25.3 32 13-11"/>
+    <path stroke="url(#kcLogoK)" stroke-linecap="round" stroke-width="4.5" d="m25.3 32 13 11"/>
+  </g>
+  <circle cx="38.3" cy="21" r="2.6" fill="#e0fbff"/>
+  <circle cx="38.3" cy="43" r="2.6" fill="#e0fbff"/>
+  <g fill="#67e8f9" opacity=".9">
+    <circle cx="32" cy="4" r="1.5"/>
+    <circle cx="56.25" cy="18" r="1.5"/>
+    <circle cx="56.25" cy="46" r="1.5"/>
+    <circle cx="32" cy="60" r="1.5"/>
+    <circle cx="7.75" cy="46" r="1.5"/>
+    <circle cx="7.75" cy="18" r="1.5"/>
+  </g>
+  <text x="80" y="34" fill="#f8fafc" font-family="Rubik, Inter, system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="20" font-weight="700" lengthAdjust="spacingAndGlyphs" letter-spacing="1.2" textLength="150">KRYPTONCORE</text>
+  <rect width="26" height="19" x="238" y="20" fill="#06b6d4" fill-opacity=".14" stroke="#3b82f6" stroke-opacity=".38" rx="4"/>
+  <text x="251" y="34" fill="#67e8f9" font-family="Rubik, Inter, system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="11" font-weight="700" letter-spacing=".5" text-anchor="middle">IT</text>
+  <text x="80" y="52" fill="#94a3b8" font-family="Rubik, Inter, system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="11" font-weight="400" lengthAdjust="spacingAndGlyphs" letter-spacing=".3" textLength="168">Serveis &amp; Sistemes Informàtics</text>
+</svg>

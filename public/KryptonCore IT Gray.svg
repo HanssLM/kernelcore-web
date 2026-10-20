@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="none" aria-label="KryptonCore IT" viewBox="0 0 64 64">
+    <title>KryptonCore IT</title>
+    <defs>
+        <linearGradient id="kcMarkGrad" x1="8" x2="56" y1="6" y2="58" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#grey"/>
+            <stop offset=".45" stop-color="#grey"/>
+            <stop offset="1" stop-color="#grey"/>
+        </linearGradient>
+        <linearGradient id="kcKGrad" x1="25.3" x2="38.3" y1="21" y2="43" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#grey"/>
+            <stop offset=".45" stop-color="#grey"/>
+            <stop offset="1" stop-color="#grey"/>
+        </linearGradient>
+        <radialGradient id="kcCoreGlow" cx="0" cy="0" r="1" gradientTransform="matrix(0 21 -21 0 29 32)">
+            <stop stop-color="#grey" stop-opacity=".42"/>
+            <stop offset="1" stop-color="#grey" stop-opacity="0"/>
+        </radialGradient>
+        <filter id="kcGlow" width="160%" height="160%" x="-30%" y="-30%" color-interpolation-filters="sRGB">
+            <feGaussianBlur result="b" stdDeviation="1.1"/>
+            <feMerge>
+                <feMergeNode in="b"/>
+                <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+        </filter>
+    </defs>
+    <path fill="url(#kcCoreGlow)" d="m32 4 24.25 14v28L32 60 7.75 46V18z"/>
+    <g filter="url(#kcGlow)">
+        <path stroke="url(#kcMarkGrad)" stroke-linejoin="round" stroke-width="3" d="m32 4 24.25 14v28L32 60 7.75 46V18z"/>
+        <path stroke="url(#kcKGrad)" stroke-linecap="round" stroke-width="4.5" d="M25.3 21v22"/>
+        <path stroke="url(#kcKGrad)" stroke-linecap="round" stroke-width="4.5" d="m25.3 32 13-11"/>
+        <path stroke="url(#kcKGrad)" stroke-linecap="round" stroke-width="4.5" d="m25.3 32 13 11"/>
+    </g>
+    <circle cx="38.3" cy="21" r="1.5" fill="#grey"/>
+    <circle cx="38.3" cy="43" r="1.5" fill="#grey"/>
+    <g fill="#grey" opacity=".9">
+        <circle cx="32" cy="4" r="1.5"/>
+        <circle cx="56.25" cy="18" r="1.5"/>
+        <circle cx="56.25" cy="46" r="1.5"/>
+        <circle cx="32" cy="60" r="1.5"/>
+        <circle cx="7.75" cy="46" r="1.5"/>
+        <circle cx="7.75" cy="18" r="1.5"/>
+    </g>
+</svg>
