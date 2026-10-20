@@ -1,54 +1,42 @@
 import React, { useState } from 'react';
-import { User, Key, X, ArrowRight, AlertCircle, Shield, Server, Network, CheckCircle2 } from 'lucide-react';
+import { User, Key, X, ArrowRight, AlertCircle, Lock } from 'lucide-react';
 import { LogoMark } from './Logo';
 import { API_BASE } from '../config/api';
 
 const OFFICIAL_PROFILES = [
   {
     id: 1,
-    shortLabel: 'Admin General',
     nom: 'Administrador KernelCore',
     email: 'admin-kernelcore@kernelcore.com',
     password: 'admin1234',
     rol: 'Administrador',
-    departament: 'Direcció DFactory',
-    icon: Shield
+    departament: 'Direcció DFactory'
   },
   {
     id: 2,
-    shortLabel: 'Hans Lao Moncusi',
     nom: 'Hans Lao Moncusi',
     email: 'hans@kernelcore.cat',
     password: 'HansKernel2026!',
     rol: 'Direcció Tècnica (Hans)',
-    departament: 'Sistemes & Seguretat',
-    icon: Server
+    departament: 'Sistemes & Seguretat'
   },
   {
     id: 3,
-    shortLabel: 'Joel Pérez Armenteros',
     nom: 'Joel Pérez Armenteros',
     email: 'joel@kernelcore.cat',
     password: 'JoelKernel2026!',
     rol: 'Direcció General (Joel)',
-    departament: 'Infraestructura de Xarxes',
-    icon: Network
+    departament: 'Infraestructura de Xarxes'
   }
 ];
 
 export default function LoginModal({ isOpen, onClose, onLoginSuccess }) {
-  const [email, setEmail] = useState('admin-kernelcore@kernelcore.com');
-  const [password, setPassword] = useState('admin1234');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
   if (!isOpen) return null;
-
-  const handleSelectProfile = (profile) => {
-    setEmail(profile.email);
-    setPassword(profile.password);
-    setError('');
-  };
 
   const performLogin = async (userEmail, userPassword) => {
     setError('');
@@ -113,11 +101,9 @@ export default function LoginModal({ isOpen, onClose, onLoginSuccess }) {
     performLogin(email, password);
   };
 
-  const normalizedInputEmail = email.trim().toLowerCase();
-
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md animate-fadeIn">
-      <div className="relative w-full max-w-xl bg-slate-900/95 border border-slate-800 rounded-3xl shadow-2xl p-7 text-slate-100">
+      <div className="relative w-full max-w-md bg-slate-900/95 border border-slate-800 rounded-3xl shadow-2xl p-7 text-slate-100">
         
         {/* Botó Tancar */}
         <button
@@ -129,64 +115,13 @@ export default function LoginModal({ isOpen, onClose, onLoginSuccess }) {
         </button>
 
         {/* Capçalera amb Logo Vectorial KernelCore */}
-        <div className="flex items-center gap-4 mb-5">
-          <LogoMark size={48} className="drop-shadow-[0_0_16px_rgba(6,182,212,0.5)]" />
+        <div className="flex items-center gap-4 mb-6">
+          <LogoMark size={44} className="drop-shadow-[0_0_16px_rgba(6,182,212,0.5)] shrink-0" />
           <div>
             <h2 className="text-xl font-heading font-black text-white tracking-tight">
-              Accés Oficial al Panell Tècnic
+              Accés Oficial al Panell
             </h2>
-            <p className="text-sm text-slate-400 font-medium">DFactory Barcelona &middot; Control d'Infraestructura IT</p>
-          </div>
-        </div>
-
-        {/* Selector Visual de Perfils Oficials DFactory */}
-        <div className="mb-5">
-          <div className="flex items-center justify-between mb-2.5">
-            <span className="text-xs font-bold uppercase tracking-wider text-cyan-400">
-              Perfils Oficials DFactory (Selecció Ràpida de Rol)
-            </span>
-            <span className="text-[11px] text-slate-500 font-medium">
-              1 clic per autocompletar
-            </span>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
-            {OFFICIAL_PROFILES.map((profile) => {
-              const IconComponent = profile.icon;
-              const isSelected = normalizedInputEmail === profile.email.toLowerCase();
-              return (
-                <button
-                  key={profile.id}
-                  type="button"
-                  onClick={() => handleSelectProfile(profile)}
-                  className={`text-left p-3 rounded-xl border transition-all cursor-pointer flex flex-col justify-between ${
-                    isSelected
-                      ? 'bg-cyan-500/15 border-cyan-500/70 shadow-lg shadow-cyan-500/10'
-                      : 'bg-slate-950/80 border-slate-800 hover:border-slate-700 hover:bg-slate-950'
-                  }`}
-                >
-                  <div className="flex items-center justify-between gap-2 mb-1.5">
-                    <div className={`p-1.5 rounded-lg ${isSelected ? 'bg-cyan-500/20 text-cyan-300' : 'bg-slate-900 text-slate-400'}`}>
-                      <IconComponent className="w-4 h-4" />
-                    </div>
-                    {isSelected && (
-                      <CheckCircle2 className="w-4 h-4 text-cyan-400 shrink-0" />
-                    )}
-                  </div>
-                  <div>
-                    <div className={`text-xs font-bold leading-snug ${isSelected ? 'text-white' : 'text-slate-200'}`}>
-                      {profile.shortLabel}
-                    </div>
-                    <div className="text-[11px] text-cyan-400/90 font-medium truncate mt-0.5">
-                      {profile.rol}
-                    </div>
-                    <div className="text-[10px] text-slate-400 truncate mt-0.5">
-                      {profile.departament}
-                    </div>
-                  </div>
-                </button>
-              );
-            })}
+            <p className="text-xs text-slate-400 font-medium">DFactory Barcelona &middot; Zona Franca</p>
           </div>
         </div>
 
@@ -207,12 +142,13 @@ export default function LoginModal({ isOpen, onClose, onLoginSuccess }) {
             <div className="relative">
               <User className="w-5 h-5 text-slate-400 absolute left-3.5 top-3" />
               <input
-                type="text"
+                type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="admin-kernelcore@kernelcore.com"
+                placeholder="usuari@kernelcore.cat"
                 className="w-full bg-slate-950 border border-slate-800 rounded-xl pl-11 pr-4 py-2.5 text-sm text-slate-100 font-medium outline-none focus:border-cyan-500 transition-colors"
                 autoComplete="username"
+                required
               />
             </div>
           </div>
@@ -230,6 +166,7 @@ export default function LoginModal({ isOpen, onClose, onLoginSuccess }) {
                 placeholder="••••••••"
                 className="w-full bg-slate-950 border border-slate-800 rounded-xl pl-11 pr-4 py-2.5 text-sm text-slate-100 font-medium outline-none focus:border-cyan-500 transition-colors"
                 autoComplete="current-password"
+                required
               />
             </div>
           </div>
@@ -252,9 +189,12 @@ export default function LoginModal({ isOpen, onClose, onLoginSuccess }) {
         </form>
 
         {/* Nota informativa clara */}
-        <div className="mt-4 p-3 rounded-xl bg-slate-950/60 border border-slate-800/60 text-xs text-slate-400 flex items-center justify-between">
-          <span className="font-mono text-cyan-400/90 font-semibold truncate">{email}</span>
-          <span className="text-slate-500 shrink-0 ml-2">DFactory Barcelona</span>
+        <div className="mt-5 p-3 rounded-xl bg-slate-950/60 border border-slate-800/60 text-xs text-slate-400 flex items-center justify-between">
+          <span className="flex items-center gap-1.5 text-cyan-400/90 font-medium">
+            <Lock className="w-3.5 h-3.5" />
+            Accés restringit RBAC
+          </span>
+          <span className="text-slate-500 shrink-0">KernelCore Security</span>
         </div>
 
       </div>
