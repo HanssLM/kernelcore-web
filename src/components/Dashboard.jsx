@@ -1325,8 +1325,8 @@ export default function Dashboard({ user, onLogout, onBackToSite }) {
           port: Number(smtpForm.port) || 587,
           user: smtpForm.user,
           pass: smtpForm.pass,
-          fromName: smtpForm.fromName,
-          fromEmail: smtpForm.fromEmail
+          fromName: smtpForm.fromName || 'KernelCore Enginyeria IT · DFactory Barcelona',
+          fromEmail: smtpForm.user || smtpForm.fromEmail || 'pressupostos@kernelcore.cat'
         };
 
     try {

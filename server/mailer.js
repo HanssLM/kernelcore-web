@@ -34,7 +34,12 @@ function escapeHtml(str) {
  * Actualitza en calent la configuració SMTP en memòria.
  */
 export function updateSmtpConfig(newConfig = {}) {
-  if (newConfig.host !== undefined) smtpConfig.host = String(newConfig.host).trim() || 'smtp.ethereal.email';
+  if (newConfig.useEthereal) {
+    smtpConfig.user = '';
+    smtpConfig.pass = '';
+    return getSmtpConfigStatus();
+  }
+  if (newConfig.host !== undefined) smtpConfig.host = String(newConfig.host).trim() || 'smtp.gmail.com';
   if (newConfig.port !== undefined) smtpConfig.port = Number(newConfig.port) || 587;
   if (newConfig.secure !== undefined) smtpConfig.secure = Boolean(newConfig.secure);
   if (newConfig.user !== undefined) smtpConfig.user = String(newConfig.user).trim();
@@ -234,23 +239,34 @@ export async function sendQuoteEmail({
   // 1. Si hi ha credencials SMTP personalitzades configurades
   if (smtpConfig.user && smtpConfig.pass) {
     try {
-      const transporter = nodemailer.createTransport({
-        host: smtpConfig.host,
-        port: Number(smtpConfig.port || 587),
-        secure: Boolean(smtpConfig.secure),
-        auth: {
-          user: smtpConfig.user,
-          pass: smtpConfig.pass
-        }
-      });
+      const isGmail = smtpConfig.host.includes('gmail') || smtpConfig.user.includes('@gmail.com');
+      const transportOpts = isGmail
+        ? {
+            service: 'gmail',
+            auth: {
+              user: smtpConfig.user,
+              pass: smtpConfig.pass.replace(/\s+/g, '') // Suprimeix espais si s'ha copiat de Google (ex: "abcd efgh ijkl mnop")
+            }
+          }
+        : {
+            host: smtpConfig.host,
+            port: Number(smtpConfig.port || 587),
+            secure: Boolean(smtpConfig.secure || Number(smtpConfig.port) === 465),
+            auth: {
+              user: smtpConfig.user,
+              pass: smtpConfig.pass
+            }
+          };
+
+      const transporter = nodemailer.createTransport(transportOpts);
 
       const info = await transporter.sendMail(mailOptions);
       const etherealUrl = nodemailer.getTestMessageUrl(info);
       return {
         delivered: true,
-        transportMode: 'SMTP Corporatiu Personalitzat',
+        transportMode: isGmail ? 'Gmail SMTP Oficial (Google Workspace)' : 'SMTP Corporatiu Personalitzat',
         messageId: info.messageId || `kc-smtp-${Date.now()}`,
-        previewUrl: etherealUrl || `data:text/html;charset=utf-8,${encodeURIComponent(htmlContent)}`,
+        previewUrl: etherealUrl || null,
         pdfFilename
       };
     } catch (smtpErr) {
