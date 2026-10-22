@@ -109,7 +109,8 @@ export default function LegalModal({ isOpen, onClose, activeSection = 'privacita
                 <h3 className="text-sm font-heading font-bold text-white">1. Dades del Titular i Responsable</h3>
                 <ul className="list-disc list-inside space-y-1 text-slate-400 pl-2">
                   <li><strong>Denominació Comercial:</strong> KernelCore</li>
-                  <li><strong>Titulars Tècnics:</strong> Hans Lao Moncusi & Joel Pérez Armenteros</li>
+                  <li><strong>Socis Fundadors:</strong> Hans Lao Moncusi &amp; Joel Pérez Armenteros</li>
+                  <li><strong>Creació i Desenvolupament Web:</strong> Hans Lao Moncusi (autor i desenvolupador íntegre de la plataforma)</li>
                   <li><strong>Activitat:</strong> Projecte Tècnic d'Enginyeria de Sistemes Microinformàtics i Xarxes (Cicle Formatiu SMX - Mòdul de Síntesi). Serveis d'instal·lació de xarxes, servidors i manteniment informàtic.</li>
                   <li><strong>Domicili Social / Seu Central:</strong> DFactory Barcelona, Carrer 27 del BZ, 10-16, Zona Franca, 08040 Barcelona, Espanya.</li>
                   <li><strong>Correu electrònic de contacte:</strong> <a href="mailto:legal@kernelcore.cat" className="text-cyan-400 hover:text-cyan-300 underline underline-offset-2 font-mono transition-colors">legal@kernelcore.cat</a> / <a href="mailto:suport@kernelcore.cat" className="text-cyan-400 hover:text-cyan-300 underline underline-offset-2 font-mono transition-colors">suport@kernelcore.cat</a></li>
@@ -120,7 +121,7 @@ export default function LegalModal({ isOpen, onClose, activeSection = 'privacita
               <div className="space-y-2">
                 <h3 className="text-sm font-heading font-bold text-white">2. Propietat Intel·lectual i Industrial</h3>
                 <p className="text-slate-400">
-                  El codi font, dissenys gràfics, logotips, combinacions cromàtiques, fitxers CSS/JS i continguts textuals d'aquest lloc web són propietat de KernelCore o bé s'utilitzen sota llicència de codi obert lliure de drets comercials. Queda prohibida la reproducció o explotació total o parcial sense consentiment exprés previ.
+                  El codi font, arquitectura de programari, dissenys gràfics, logotips, combinacions cromàtiques, base de dades i motor d'enginyeria d'aquesta plataforma web han estat creats íntegrament per Hans Lao Moncusi per a KernelCore (ambdós socis: Hans Lao Moncusi &amp; Joel Pérez Armenteros). Queda prohibida la reproducció o explotació total o parcial sense consentiment exprés previ.
                 </p>
               </div>
 

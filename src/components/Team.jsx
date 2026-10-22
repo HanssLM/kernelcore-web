@@ -5,18 +5,18 @@ export default function Team() {
   const founders = [
     {
       name: 'Hans Lao Moncusi',
-      role: 'Direcció Tècnica & Administració de Sistemes',
-      specialty: 'Sistemes Operatius & Servidors',
+      role: 'Direcció Tècnica, Sistemes & Desenvolupament Web',
+      specialty: 'Sistemes Operatius & Desenvolupament de la Plataforma Web',
       photo: '/Hans.svg',
-      desc: 'Desplegament i gestió de Windows Server 2025 i Linux, polítiques de grup en Active Directory, virtualització de servidors (Proxmox VE) i seguretat de sistemes.',
-      skills: ['Windows Server / AD DS', 'Linux & Bash Scripting', 'Virtualització Proxmox', 'Resiliència & Backups GFS']
+      desc: 'Creador i desenvolupador íntegre de la plataforma web KernelCore, API REST i base de dades. Gestió de Windows Server 2025 i Linux, polítiques Active Directory, virtualització Proxmox VE i contenidors Docker.',
+      skills: ['Desenvolupament Web & Docker', 'Windows Server / AD DS', 'Linux & Bash Scripting', 'Virtualització Proxmox', 'Resiliència & Backups GFS']
     },
     {
       name: 'Joel Pérez Armenteros',
       role: 'Direcció General & Infraestructura de Xarxes',
       specialty: 'Enginyeria de Xarxes & Maquinari',
       photo: '/Joel.svg',
-      desc: 'Disseny físic i lògic de xarxes corporatives, canalització i cablejat Cat6/Cat6A certificat, configuració de switches L2/L3 PoE+, armaris rack 19" i punts TPV.',
+      desc: 'Soci cofundador. Disseny físic i lògic de xarxes corporatives, canalització i cablejat Cat6/Cat6A certificat, configuració de switches L2/L3 PoE+, armaris rack 19" i punts TPV.',
       skills: ['Cablejat Cat6/Cat6A Fluke', 'Switches gestionables L2/L3', 'VLANs & Enrutament', 'Armaris Rack 19" & TPVs']
     }
   ];

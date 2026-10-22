@@ -53,7 +53,7 @@ export default function Footer({ onOpenLegal = () => {} }) {
           <div className="space-y-2">
             <h4 className="font-heading font-bold text-white text-xs uppercase tracking-wider">Identitat & Marc Legal</h4>
             <p className="text-[11px] text-slate-400 leading-relaxed">
-              KernelCore · Titulars: Hans Lao Moncusi &amp; Joel Pérez Armenteros. Seu Central: DFactory Barcelona (Zona Franca, 08040 Barcelona). Projecte Mòdul de Síntesi (SMX).
+              KernelCore · Socis: Hans Lao Moncusi &amp; Joel Pérez Armenteros. Seu Central: DFactory Barcelona (Zona Franca, 08040 Barcelona). Creació i desenvolupament web integral a càrrec de Hans Lao Moncusi. Projecte Mòdul de Síntesi (SMX).
             </p>
             <div className="pt-1 text-[11px] text-slate-500 font-mono">
               Tel: <a href="tel:+34938100200" className="hover:text-emerald-400 transition-colors">+34 938 100 200</a> · <a href="mailto:legal@kernelcore.cat" className="hover:text-cyan-400 underline underline-offset-2 transition-colors">legal@kernelcore.cat</a>

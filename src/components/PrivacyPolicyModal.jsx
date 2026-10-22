@@ -62,7 +62,8 @@ export default function PrivacyPolicyModal({ isOpen, onClose }) {
             </h3>
             <ul className="list-disc list-inside space-y-1 text-slate-400 pl-2">
               <li><strong>Identitat:</strong> KernelCore (Projecte Tècnic SMX - Mòdul Síntesi)</li>
-              <li><strong>Titulars Tècnics:</strong> Hans Lao Moncusi &amp; Joel Pérez Armenteros</li>
+              <li><strong>Socis de l'Empresa:</strong> Hans Lao Moncusi &amp; Joel Pérez Armenteros</li>
+              <li><strong>Desenvolupament Web &amp; Gestió Digital:</strong> Hans Lao Moncusi</li>
               <li><strong>Correu de contacte:</strong> <a href="mailto:dpo@kernelcore.cat" className="text-cyan-400 hover:text-cyan-300 underline underline-offset-2 font-mono transition-colors">dpo@kernelcore.cat</a> / <a href="mailto:privacitat@kernelcore.cat" className="text-cyan-400 hover:text-cyan-300 underline underline-offset-2 font-mono transition-colors">privacitat@kernelcore.cat</a></li>
               <li><strong>Ubicació:</strong> DFactory Barcelona, Carrer 27 del BZ, 10-16 (Zona Franca), 08040 Barcelona</li>
             </ul>
