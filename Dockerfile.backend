@@ -1,0 +1,29 @@
+# ==========================================================
+# Dockerfile per al Backend de KernelCore (Express Node.js)
+# ==========================================================
+FROM node:22-alpine
+
+WORKDIR /app
+
+# Instal·lar dependències
+COPY package*.json ./
+RUN npm install --omit=dev
+
+# Copiar codi del backend i dades
+COPY server ./server
+COPY database ./database
+
+# Port d'escolta de l'API REST
+EXPOSE 4000
+
+# Variables d'entorn per defecte (sobrescrites per docker-compose)
+ENV NODE_ENV=production
+ENV PORT=4000
+ENV DB_HOST=mariadb
+ENV DB_PORT=3306
+ENV DB_USER=root
+ENV DB_PASSWORD=kernelcore_root_secure
+ENV DB_NAME=kernelcore_db
+
+# Executar el servidor Express
+CMD ["node", "server/index.js"]

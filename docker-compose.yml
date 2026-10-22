@@ -1,0 +1,81 @@
+services:
+  # -------------------------------------------------------------
+  # 1. SERVEI DE BASE DE DADES RELACIONAL: MariaDB 10.11
+  # -------------------------------------------------------------
+  mariadb:
+    image: mariadb:10.11
+    container_name: kernelcore-mariadb
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: kernelcore_root_secure
+      MYSQL_DATABASE: kernelcore_db
+    ports:
+      - "3306:3306"
+    volumes:
+      - mariadb_data:/var/lib/mysql
+      - ./database/kernelcore_db.sql:/docker-entrypoint-initdb.d/01-kernelcore_db.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "mariadb-admin ping -h localhost -u root --password=kernelcore_root_secure || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+    networks:
+      - kernelcore-network
+
+  # -------------------------------------------------------------
+  # 2. SERVEI BACKEND REST API: Node.js Express + PDFKit + Mailer
+  # -------------------------------------------------------------
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    container_name: kernelcore-backend
+    restart: always
+    depends_on:
+      mariadb:
+        condition: service_healthy
+    ports:
+      - "4000:4000"
+    environment:
+      NODE_ENV: production
+      PORT: 4000
+      DB_HOST: mariadb
+      DB_PORT: 3306
+      DB_USER: root
+      DB_PASSWORD: kernelcore_root_secure
+      DB_NAME: kernelcore_db
+      SMTP_HOST: smtp.gmail.com
+      SMTP_PORT: 465
+      SMTP_USER: igarciamunoz484@gmail.com
+      SMTP_PASS: farvtdretepleskc
+    networks:
+      - kernelcore-network
+
+  # -------------------------------------------------------------
+  # 3. SERVEI FRONTEND WEB: React 19 + Vite + Nginx Reverse Proxy
+  # -------------------------------------------------------------
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: kernelcore-frontend
+    restart: always
+    depends_on:
+      - backend
+    ports:
+      - "80:80"
+      - "5173:80"
+    networks:
+      - kernelcore-network
+
+# ---------------------------------------------------------------
+# VOLUMS I XARXES VIRTUALS
+# ---------------------------------------------------------------
+volumes:
+  mariadb_data:
+    driver: local
+
+networks:
+  kernelcore-network:
+    driver: bridge
