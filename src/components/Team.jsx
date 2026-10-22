@@ -16,7 +16,7 @@ export default function Team() {
       role: 'Direcció General & Infraestructura de Xarxes',
       specialty: 'Enginyeria de Xarxes & Maquinari',
       photo: '/Joel.svg',
-      desc: 'Soci cofundador. Disseny físic i lògic de xarxes corporatives, canalització i cablejat Cat6/Cat6A certificat, configuració de switches L2/L3 PoE+, armaris rack 19" i punts TPV.',
+      desc: 'Disseny físic i lògic de xarxes corporatives, canalització i cablejat Cat6/Cat6A certificat, configuració de switches L2/L3 PoE+, armaris rack 19" i punts TPV.',
       skills: ['Cablejat Cat6/Cat6A Fluke', 'Switches gestionables L2/L3', 'VLANs & Enrutament', 'Armaris Rack 19" & TPVs']
     }
   ];
@@ -28,7 +28,7 @@ export default function Team() {
         <div className="text-center max-w-3xl mx-auto mb-14 space-y-3">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-900 border border-slate-800 text-xs font-semibold text-cyan-400">
             <Users className="w-3.5 h-3.5" aria-hidden="true" />
-            <span>Equip Fundador &amp; Responsabilitat Tècnica</span>
+            <span>Equip Tècnic &amp; Direcció</span>
           </div>
           <h2 className="text-3xl sm:text-4xl font-heading font-extrabold text-white tracking-tight">
             Qui som darrere de KernelCore
@@ -38,7 +38,7 @@ export default function Team() {
           </p>
         </div>
 
-        {/* Targetes dels dos socis fundadors: ample màxim real 50%/50%, mínim marge lateral i disseny integrat d'alta gamma */}
+        {/* Targetes de l'equip tècnic: ample màxim real 50%/50%, mínim marge lateral i disseny integrat d'alta gamma */}
         <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 w-full">
           {founders.map((member, idx) => (
             <div 

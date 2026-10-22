@@ -109,7 +109,7 @@ export default function LegalModal({ isOpen, onClose, activeSection = 'privacita
                 <h3 className="text-sm font-heading font-bold text-white">1. Dades del Titular i Responsable</h3>
                 <ul className="list-disc list-inside space-y-1 text-slate-400 pl-2">
                   <li><strong>Denominació Comercial:</strong> KernelCore</li>
-                  <li><strong>Socis Fundadors:</strong> Hans Lao Moncusi &amp; Joel Pérez Armenteros</li>
+                  <li><strong>Socis:</strong> Hans Lao Moncusi &amp; Joel Pérez Armenteros</li>
                   <li><strong>Creació i Desenvolupament Web:</strong> Hans Lao Moncusi (autor i desenvolupador íntegre de la plataforma)</li>
                   <li><strong>Activitat:</strong> Projecte Tècnic d'Enginyeria de Sistemes Microinformàtics i Xarxes (Cicle Formatiu SMX - Mòdul de Síntesi). Serveis d'instal·lació de xarxes, servidors i manteniment informàtic.</li>
                   <li><strong>Domicili Social / Seu Central:</strong> DFactory Barcelona, Carrer 27 del BZ, 10-16, Zona Franca, 08040 Barcelona, Espanya.</li>
