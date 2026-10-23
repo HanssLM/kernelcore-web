@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Mail, Phone, MapPin, Clock, Send, CheckCircle2 } from 'lucide-react';
 import { API_BASE } from '../config/api';
+import { supabase } from '../lib/supabaseClient';
 
 export default function Contact({ onOpenLegal = () => { } }) {
   const [sent, setSent] = useState(false);
@@ -30,6 +31,23 @@ export default function Contact({ onOpenLegal = () => { } }) {
       });
     } catch {
       // Fallback silenciós si el backend no està encès
+    }
+
+    // Inserció directa a Supabase Cloud Database si està disponible
+    if (supabase) {
+      try {
+        await supabase.from('contactes_web').insert([{
+          nom,
+          email,
+          telefon,
+          tipus_servei: tipusServei,
+          missatge,
+          consentiment_rgpd: accepted,
+          estat: 'Nou'
+        }]);
+      } catch {
+        // Fallback silenciós
+      }
     }
 
     try {

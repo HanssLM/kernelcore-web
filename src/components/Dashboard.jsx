@@ -16,6 +16,7 @@ import {
   Network, BatteryCharging, Copy, HardDrive
 } from 'lucide-react';
 import { API_BASE, BACKEND_URL } from '../config/api';
+import { supabase, isSupabaseConfigured } from '../lib/supabaseClient';
 
 function parseSaiCalculation(text) {
   if (!text || typeof text !== 'string') return null;
@@ -670,9 +671,12 @@ export default function Dashboard({ user, onLogout, onBackToSite }) {
       // Health check
       const healthRes = await fetch(`${API_BASE}/health`).catch(() => null);
       if (healthRes && healthRes.ok) {
-        const healthData = await healthRes.json();
+        const healthData = await healthRes.json().catch(() => ({}));
         setIsBackendOnline(true);
         setBackendInfo(healthData.seu || 'DFactory Barcelona');
+      } else if (isSupabaseConfigured && supabase) {
+        setIsBackendOnline(true);
+        setBackendInfo('DFactory · Supabase Cloud (PostgreSQL)');
       } else {
         setIsBackendOnline(false);
         setBackendInfo('DFactory Barcelona (Mode Local)');
@@ -723,8 +727,26 @@ export default function Dashboard({ user, onLogout, onBackToSite }) {
       // Inventari
       const invRes = await fetch(`${API_BASE}/inventari`).catch(() => null);
       if (invRes && invRes.ok) {
-        const data = await invRes.json();
-        setInventory(data);
+        const data = await invRes.json().catch(() => null);
+        if (Array.isArray(data)) setInventory(data);
+      } else if (isSupabaseConfigured && supabase) {
+        const { data: sInv } = await supabase.from('inventari_maquinari').select('*').catch(() => ({ data: null }));
+        if (Array.isArray(sInv) && sInv.length > 0) {
+          setInventory(sInv.map(i => ({
+            id: i.id_article,
+            sku: i.codi_referencia,
+            name: i.nom_article,
+            brand: i.fabricant,
+            category: i.categoria,
+            tier: i.gama,
+            stock: i.estoc_actual,
+            min: i.estoc_minim,
+            price: Number(i.preu_venda),
+            cost: Number(i.preu_cost)
+          })));
+        } else {
+          setInventory(prev => (prev.length > 0 ? prev : initialDashboardData.inventory));
+        }
       } else {
         setInventory(prev => (prev.length > 0 ? prev : initialDashboardData.inventory));
       }
@@ -750,8 +772,15 @@ export default function Dashboard({ user, onLogout, onBackToSite }) {
       // Clients corporatius
       const cliRes = await fetch(`${API_BASE}/clients`).catch(() => null);
       if (cliRes && cliRes.ok) {
-        const data = await cliRes.json();
+        const data = await cliRes.json().catch(() => null);
         if (Array.isArray(data) && data.length > 0) setClients(data);
+      } else if (isSupabaseConfigured && supabase) {
+        const { data: sCli } = await supabase.from('clients').select('*').catch(() => ({ data: null }));
+        if (Array.isArray(sCli) && sCli.length > 0) {
+          setClients(sCli);
+        } else {
+          setClients(prev => (prev.length > 0 ? prev : FALLBACK_CLIENTS));
+        }
       } else {
         setClients(prev => (prev.length > 0 ? prev : FALLBACK_CLIENTS));
       }
@@ -759,8 +788,15 @@ export default function Dashboard({ user, onLogout, onBackToSite }) {
       // Proveïdors oficials
       const supRes = await fetch(`${API_BASE}/proveidors`).catch(() => null);
       if (supRes && supRes.ok) {
-        const data = await supRes.json();
+        const data = await supRes.json().catch(() => null);
         if (Array.isArray(data) && data.length > 0) setSuppliers(data);
+      } else if (isSupabaseConfigured && supabase) {
+        const { data: sSup } = await supabase.from('proveidors').select('*').catch(() => ({ data: null }));
+        if (Array.isArray(sSup) && sSup.length > 0) {
+          setSuppliers(sSup);
+        } else {
+          setSuppliers(prev => (prev.length > 0 ? prev : FALLBACK_SUPPLIERS));
+        }
       } else {
         setSuppliers(prev => (prev.length > 0 ? prev : FALLBACK_SUPPLIERS));
       }
