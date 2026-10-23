@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Mail, Phone, MapPin, Clock, Send, CheckCircle2 } from 'lucide-react';
 import { API_BASE } from '../config/api';
 
-export default function Contact({ onOpenLegal = () => {} }) {
+export default function Contact({ onOpenLegal = () => { } }) {
   const [sent, setSent] = useState(false);
   const [nom, setNom] = useState('');
   const [empresa, setEmpresa] = useState('');
@@ -71,9 +71,9 @@ export default function Contact({ onOpenLegal = () => {} }) {
   return (
     <section id="contacte" className="py-24 bg-slate-900/40 relative border-t border-slate-900">
       <div className="w-full max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-10">
-        
+
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-          
+
           {/* Contact Info */}
           <div className="lg:col-span-5 space-y-6">
             <span className="text-xs font-mono uppercase tracking-wider text-cyan-400 bg-slate-900 px-3 py-1 rounded-full border border-slate-800">
@@ -103,8 +103,8 @@ export default function Contact({ onOpenLegal = () => {} }) {
                 </div>
                 <div>
                   <span className="text-[11px] text-slate-500 block uppercase font-mono">Correu Tècnic</span>
-                  <a 
-                    href="mailto:suport@kernelcore.cat" 
+                  <a
+                    href="mailto:suport@kernelcore.cat"
                     className="text-sm font-medium text-slate-200 hover:text-cyan-400 underline underline-offset-2 transition-colors"
                   >
                     suport@kernelcore.cat
@@ -118,8 +118,8 @@ export default function Contact({ onOpenLegal = () => {} }) {
                 </div>
                 <div>
                   <span className="text-[11px] text-slate-500 block uppercase font-mono">Telèfon d'Urgències IT</span>
-                  <a 
-                    href="tel:+34938100200" 
+                  <a
+                    href="tel:+34938100200"
                     className="text-sm font-medium text-slate-200 hover:text-emerald-400 transition-colors"
                   >
                     +34 938 100 200 (Guardia 24/7)
