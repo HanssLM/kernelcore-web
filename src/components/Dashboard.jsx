@@ -12,7 +12,7 @@ import {
   RotateCcw, LayoutGrid, List, Tag, Factory, ArrowUpDown, AlertTriangle,
   MapPin, User, Flame, Info, Download, ChevronDown, ChevronUp,
   ShieldCheck, Truck, Users, Filter, Lock,
-  Send, UserCheck, Key, Award, FileSignature, Fingerprint, Save,
+  Send, UserCheck, Key, Award, FileSignature, Save,
   Network, BatteryCharging, Copy, HardDrive
 } from 'lucide-react';
 import { API_BASE, BACKEND_URL } from '../config/api';
@@ -460,9 +460,8 @@ export default function Dashboard({ user, onLogout, onBackToSite }) {
   const [activeTab, setActiveTab] = useState('overview');
   const [sidebarOpen, setSidebarOpen] = useState(true);
 
-  // Sistema de Rols i Permisos en Viu (Admin / Hans / Joel)
-  const [roleOverride, setActiveRoleKey] = useState(null);
-  const activeRoleKey = roleOverride || detectInitialRole(user);
+  // Rol de l'usuari autenticat
+  const activeRoleKey = detectInitialRole(user);
   const currentRole = ROLE_PROFILES[activeRoleKey] || ROLE_PROFILES.admin;
 
   // Dades operatives vives sincronitzades amb el Backend (amb fallback inicial complet)
@@ -4632,54 +4631,6 @@ export default function Dashboard({ user, onLogout, onBackToSite }) {
                       <span className="text-emerald-400 font-bold">SHA-256 (FIPS 180-4)</span>
                     </div>
                   </div>
-                </div>
-              </div>
-
-              {/* Selector Ràpid de Perfils Oficials DFactory */}
-              <div className="relative z-10 mt-6 pt-6 border-t border-slate-800/80">
-                <p className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3 flex items-center gap-2">
-                  <Fingerprint className="w-4 h-4 text-cyan-400" />
-                  Commutar Perfil Tècnic en Temps Real:
-                </p>
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                  {Object.values(ROLE_PROFILES).map(r => {
-                    const isSelected = currentRole.id === r.id;
-                    return (
-                      <button
-                        key={r.id}
-                        type="button"
-                        onClick={() => {
-                          setActiveRoleKey(r.id);
-                          if (r.id === 'hans') {
-                            setProjectLeadFilter('hans');
-                            setTicketLeadFilter('hans');
-                          } else if (r.id === 'joel') {
-                            setProjectLeadFilter('joel');
-                            setTicketLeadFilter('joel');
-                          } else {
-                            setProjectLeadFilter('all');
-                            setTicketLeadFilter('all');
-                          }
-                        }}
-                        className={`p-3.5 rounded-2xl border text-left transition-all relative flex items-center gap-3 ${
-                          isSelected
-                            ? 'bg-slate-900 border-cyan-400 ring-2 ring-cyan-500/30 shadow-lg shadow-cyan-500/10'
-                            : 'bg-slate-950/70 border-slate-800/80 hover:border-slate-700 hover:bg-slate-900/60'
-                        }`}
-                      >
-                        <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${r.avatarColor} text-slate-950 font-black text-sm flex items-center justify-center shrink-0`}>
-                          {r.nom.charAt(0)}
-                        </div>
-                        <div className="min-w-0">
-                          <h4 className="text-xs font-bold text-white truncate">{r.nom}</h4>
-                          <p className="text-[11px] text-cyan-400 font-mono truncate">{r.email}</p>
-                        </div>
-                        {isSelected && (
-                          <div className="ml-auto w-2 h-2 rounded-full bg-cyan-400 shadow-[0_0_8px_rgba(6,182,212,0.8)] shrink-0" />
-                        )}
-                      </button>
-                    );
-                  })}
                 </div>
               </div>
             </div>
