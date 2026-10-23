@@ -145,7 +145,7 @@ INSERT INTO usuaris_tecnics (nom_complet, email, contrasenya_hash, rol, departam
 
 INSERT INTO proveidors (nom_comercial, cif, telefon, email_contacte, adreca, condicions_pagament) VALUES
 ('Ingram Micro Technologies', 'A-08123456', '935 000 100', 'comandes@ingrammicro.es', 'Av. Diagonal 400, Barcelona', '30 dies transferència'),
-('Esprinet Ibèrica S.L.U.', 'B-58234567', '936 000 200', 'vendes@esprinet.es', 'Pol. Ind. Pedrosa, L\'Hospitalet de Llobregat', '45 dies confirming'),
+('Esprinet Ibèrica S.L.U.', 'B-58234567', '936 000 200', 'vendes@esprinet.es', 'Pol. Ind. Pedrosa, L''Hospitalet de Llobregat', '45 dies confirming'),
 ('Schneider Electric & APC España', 'A-28001122', '934 843 100', 'distribucio@se.com', 'Carrer de Bac de Roda 52, Barcelona', '30 dies transferència'),
 ('TD SYNNEX Spain (Tech Data)', 'B-08456789', '932 970 000', 'enterprise@tdsynnex.com', 'Carrer de la Selva 2, El Prat de Llobregat', '60 dies domiciliació'),
 ('Posiflex & Retail Iberia', 'B-63998877', '933 219 400', 'canal@posiflexiberia.com', 'Carrer dels Motors 140, Zona Franca, Barcelona', '30 dies transferència');
@@ -194,16 +194,16 @@ INSERT INTO inventari_maquinari (codi_referencia, nom_article, fabricant, catego
 ('MIK-CCR2116-12G', 'Core Router MikroTik CCR2116-12G-4S+ 16-Core 64-bit 10G BGP/OSPF', 'MikroTik', 'Xarxa & VLAN', 'Professional / CPD', 2, 6, 2, 639.60, 820.00, 'DFactory - Passadís C3'),
 
 -- 3.4. Wi-Fi 6 i Wi-Fi 7 Empresarial (10 referències)
-('UBQ-U6-PRO', 'Punt d\'Accés Wi-Fi 6 Ubiquiti UniFi 6 Pro AX5400 Gigabit 4x4 MIMO', 'Ubiquiti', 'Wi-Fi 6', 'Mitjà Empresarial', 2, 60, 12, 85.80, 110.00, 'DFactory - Passadís D1'),
-('UBQ-U6-LR', 'Punt d\'Accés Wi-Fi 6 Ubiquiti UniFi 6 Long-Range AX3000 Cobertura Ampla', 'Ubiquiti', 'Wi-Fi 6', 'Mitjà Empresarial', 2, 35, 8, 105.30, 135.00, 'DFactory - Passadís D1'),
-('UBQ-U6-ENT', 'Punt d\'Accés Wi-Fi 6E Ubiquiti UniFi Enterprise 10.2Gbps 2.5GbE Tri-Band', 'Ubiquiti', 'Wi-Fi 6', 'Professional / CPD', 2, 18, 4, 191.10, 245.00, 'DFactory - Passadís D1'),
-('UBQ-U7-PRO', 'Punt d\'Accés Wi-Fi 7 Ubiquiti UniFi 7 Pro Tri-Band 2.5GbE Multi-Link Operation', 'Ubiquiti', 'Wi-Fi 6', 'Mitjà Empresarial', 2, 24, 5, 128.70, 165.00, 'DFactory - Passadís D1'),
+('UBQ-U6-PRO', 'Punt d''Accés Wi-Fi 6 Ubiquiti UniFi 6 Pro AX5400 Gigabit 4x4 MIMO', 'Ubiquiti', 'Wi-Fi 6', 'Mitjà Empresarial', 2, 60, 12, 85.80, 110.00, 'DFactory - Passadís D1'),
+('UBQ-U6-LR', 'Punt d''Accés Wi-Fi 6 Ubiquiti UniFi 6 Long-Range AX3000 Cobertura Ampla', 'Ubiquiti', 'Wi-Fi 6', 'Mitjà Empresarial', 2, 35, 8, 105.30, 135.00, 'DFactory - Passadís D1'),
+('UBQ-U6-ENT', 'Punt d''Accés Wi-Fi 6E Ubiquiti UniFi Enterprise 10.2Gbps 2.5GbE Tri-Band', 'Ubiquiti', 'Wi-Fi 6', 'Professional / CPD', 2, 18, 4, 191.10, 245.00, 'DFactory - Passadís D1'),
+('UBQ-U7-PRO', 'Punt d''Accés Wi-Fi 7 Ubiquiti UniFi 7 Pro Tri-Band 2.5GbE Multi-Link Operation', 'Ubiquiti', 'Wi-Fi 6', 'Mitjà Empresarial', 2, 24, 5, 128.70, 165.00, 'DFactory - Passadís D1'),
 ('UBQ-UCG-ULTRA', 'Controladora UniFi Cloud Gateway Ultra 1Gbps Firewall IPS integrat', 'Ubiquiti', 'Wi-Fi 6', 'Bàsic / General', 2, 24, 5, 108.42, 139.00, 'DFactory - Passadís D1'),
 ('UBQ-UDM-PRO-MAX', 'Consola de Xarxa Ubiquiti UniFi Dream Machine Pro Max Dual 10G SFP+ NVR', 'Ubiquiti', 'Wi-Fi 6', 'Professional / CPD', 2, 10, 2, 421.20, 540.00, 'DFactory - Passadís D1'),
-('ARUB-AP22', 'Punt d\'Accés Wi-Fi 6 Aruba Instant On AP22 AX1800 Mesh Certificat WPA3', 'HPE Aruba', 'Wi-Fi 6', 'Bàsic / General', 1, 25, 5, 93.60, 120.00, 'DFactory - Passadís D2'),
-('ARUB-AP25', 'Punt d\'Accés Wi-Fi 6 Aruba Instant On AP25 AX5400 4x4 2.5G Ultra-Densitat', 'HPE Aruba', 'Wi-Fi 6', 'Mitjà Empresarial', 1, 16, 3, 167.70, 215.00, 'DFactory - Passadís D2'),
-('CSCO-C9115AXI', 'Punt d\'Accés Cisco Catalyst 9115AXI Wi-Fi 6 Empresarial Antenes Internes', 'Cisco', 'Wi-Fi 6', 'Professional / CPD', 1, 12, 3, 382.20, 490.00, 'DFactory - Passadís D2'),
-('CSCO-C9130AXE', 'Punt d\'Accés Cisco Catalyst 9130AXE Wi-Fi 6 8x8 Tri-Radio Alta Freqüència', 'Cisco', 'Wi-Fi 6', 'Professional / CPD', 1, 6, 2, 694.20, 890.00, 'DFactory - Passadís D2'),
+('ARUB-AP22', 'Punt d''Accés Wi-Fi 6 Aruba Instant On AP22 AX1800 Mesh Certificat WPA3', 'HPE Aruba', 'Wi-Fi 6', 'Bàsic / General', 1, 25, 5, 93.60, 120.00, 'DFactory - Passadís D2'),
+('ARUB-AP25', 'Punt d''Accés Wi-Fi 6 Aruba Instant On AP25 AX5400 4x4 2.5G Ultra-Densitat', 'HPE Aruba', 'Wi-Fi 6', 'Mitjà Empresarial', 1, 16, 3, 167.70, 215.00, 'DFactory - Passadís D2'),
+('CSCO-C9115AXI', 'Punt d''Accés Cisco Catalyst 9115AXI Wi-Fi 6 Empresarial Antenes Internes', 'Cisco', 'Wi-Fi 6', 'Professional / CPD', 1, 12, 3, 382.20, 490.00, 'DFactory - Passadís D2'),
+('CSCO-C9130AXE', 'Punt d''Accés Cisco Catalyst 9130AXE Wi-Fi 6 8x8 Tri-Radio Alta Freqüència', 'Cisco', 'Wi-Fi 6', 'Professional / CPD', 1, 6, 2, 694.20, 890.00, 'DFactory - Passadís D2'),
 
 -- 3.5. Seguretat Perimetral / Firewalls NGFW (8 referències)
 ('FTN-FG-40F', 'Firewall NGFW Fortinet FortiGate 40F 5Gbps Firewall 600Mbps Threat Protection', 'Fortinet', 'Seguretat NGFW', 'Bàsic / General', 1, 18, 4, 304.20, 390.00, 'DFactory - Passadís E1'),
@@ -259,7 +259,7 @@ INSERT INTO inventari_maquinari (codi_referencia, nom_article, fabricant, catego
 ('POS-CR4100-BL', 'Calaix Portamonedes Posiflex CR-4100 Obertura Elèctrica RJ11 Alta Resistència', 'Posiflex', 'Retail TPV', 'Bàsic / General', 2, 35, 8, 50.70, 65.00, 'DFactory - Passadís I1'),
 ('EPS-TM20-ETH', 'Impressora Tèrmica Epson TM-T20III 250mm/s Ethernet + USB + Tallador Automàtic', 'Epson', 'Retail TPV', 'Bàsic / General', 2, 32, 6, 105.30, 135.00, 'DFactory - Passadís I2'),
 ('EPS-TM88-VII', 'Impressora Tèrmica Epson TM-T88VII Alta Velocitat 500mm/s Triple Interfície Cloud Print', 'Epson', 'Retail TPV', 'Mitjà Empresarial', 2, 18, 4, 202.80, 260.00, 'DFactory - Passadís I2'),
-('ZEB-ZD421-TT', 'Impressora d\'Etiquetes Transferència Tèrmica Zebra ZD421t 300dpi Ethernet/USB', 'Zebra Technologies', 'Retail TPV', 'Mitjà Empresarial', 1, 15, 3, 265.20, 340.00, 'DFactory - Passadís I3'),
+('ZEB-ZD421-TT', 'Impressora d''Etiquetes Transferència Tèrmica Zebra ZD421t 300dpi Ethernet/USB', 'Zebra Technologies', 'Retail TPV', 'Mitjà Empresarial', 1, 15, 3, 265.20, 340.00, 'DFactory - Passadís I3'),
 ('ZEB-DS2208-2D', 'Lector Codi de Barres 2D QR Zebra DS2208 USB amb Suport Mans Lliures Intellistand', 'Zebra Technologies', 'Retail TPV', 'Bàsic / General', 1, 40, 8, 71.76, 92.00, 'DFactory - Passadís I3'),
 ('ZEB-TC21-MOB', 'Terminal Portàtil PDA Zebra TC21 Android 11 Wi-Fi Escàner SE4710 per Magatzem', 'Zebra Technologies', 'Retail TPV', 'Mitjà Empresarial', 1, 12, 3, 358.80, 460.00, 'DFactory - Passadís I3'),
 ('DAT-QSCAN-2D', 'Lector Codi de Barres 2D QR Datalogic QuickScan QD2430 amb Suport Fix', 'Datalogic', 'Retail TPV', 'Bàsic / General', 2, 30, 6, 66.30, 85.00, 'DFactory - Passadís I3'),
@@ -269,14 +269,14 @@ INSERT INTO inventari_maquinari (codi_referencia, nom_article, fabricant, catego
 ('FLK-DSX-8000', 'Certificador de Cablejat Fluke Networks DSX-8000 Cat8 2000MHz 40G Cat8 Certificat', 'Fluke Networks', 'Eines SAT', 'Professional / CPD', 1, 1, 1, 4524.00, 5800.00, 'DFactory - Laboratori SAT'),
 ('FLK-LIQ-100', 'Comprovador de Xarxa Fluke Networks LinkIQ amb Test de Càrrega PoE 90W i Cablejat', 'Fluke Networks', 'Eines SAT', 'Professional / CPD', 1, 5, 1, 1443.00, 1850.00, 'DFactory - Laboratori SAT'),
 ('FLK-MS2-100', 'Comprovador Verificador de Cables MicroScanner2 Fluke Networks PoE i Mapa de Filferros', 'Fluke Networks', 'Eines SAT', 'Mitjà Empresarial', 1, 10, 2, 483.60, 620.00, 'DFactory - Laboratori SAT'),
-('FLK-FIBER-INSP', 'Sonda d\'Inspecció de Fibra Òptica Fluke FiberInspector FI-7000 Pass/Fail Automatitzat', 'Fluke Networks', 'Eines SAT', 'Professional / CPD', 1, 3, 1, 1677.00, 2150.00, 'DFactory - Laboratori SAT');
+('FLK-FIBER-INSP', 'Sonda d''Inspecció de Fibra Òptica Fluke FiberInspector FI-7000 Pass/Fail Automatitzat', 'Fluke Networks', 'Eines SAT', 'Professional / CPD', 1, 3, 1, 1677.00, 2150.00, 'DFactory - Laboratori SAT');
 
 INSERT INTO clients (nom_empresa, nif_cif, persona_contacte, telefon, email, adreca, poblacio, tipus_entorn) VALUES
 ('Logística & Robòtica Zona Franca BCN', 'B-65891204', 'Carlos Mendoza', '+34 932 631 100', 'carlos.mendoza@logisticazf.cat', 'Carrer 27 del BZ, Zona Franca, Barcelona', 'Barcelona', 'Industrial'),
 ('Clínica Dental Diagonal', 'B-61209843', 'Dra. Laura Miralles', '+34 934 145 220', 'administracio@dentaldiagonal.cat', 'Av. Diagonal 490, Barcelona', 'Barcelona', 'Oficina PIME'),
 ('Supermercats Gourmet Born S.L.', 'B-64901122', 'Marc Vila i Soler', '+34 932 458 910', 'm.vila@gourmetborn.cat', 'Passeig del Born 18, Barcelona', 'Barcelona', 'Comerç & Retail'),
 ('Nexum Tech Studio Barcelona (22@)', 'B-67441098', 'Sílvia Camps Prat', '+34 931 889 021', 'silvia@nexumtech.barcelona', 'Carrer de Pallars 193, 22@ Barcelona', 'Barcelona', 'Espai Co-working'),
-('Centre Mèdic & Diagnòstic Eixample', 'B-62334510', 'Dr. Oriol Rius Castells', '+34 934 112 300', 'o.rius@mediceixample.com', 'Carrer d\'Aragó 280, Barcelona', 'Barcelona', 'Oficina PIME'),
+('Centre Mèdic & Diagnòstic Eixample', 'B-62334510', 'Dr. Oriol Rius Castells', '+34 934 112 300', 'o.rius@mediceixample.com', 'Carrer d''Aragó 280, Barcelona', 'Barcelona', 'Oficina PIME'),
 ('Bufet Jurídic Fontanals & Associats', 'B-59887120', 'Clara Fontanals Bellver', '+34 935 440 188', 'clara@fontanalsjuridic.es', 'Passeig de Gràcia 84, Barcelona', 'Barcelona', 'Oficina PIME');
 
 INSERT INTO pressupostos (codi_pressupost, id_client, resum_equipament, cost_maquinari, cost_software, cost_ma_obra, base_imposable, import_total, quota_mensual_suport, estat, data_emissio) VALUES
@@ -291,11 +291,11 @@ INSERT INTO projectes_instalacio (codi_projecte, titol_projecte, id_client, id_p
 ('PRJ-26-03', 'Modernització Infraestructura POS i Segmentació Wi-Fi 6 Supermercats Gourmet Born', 3, 3, 20, '2026-10-11', '2026-11-10', 3, 'En execució');
 
 INSERT INTO tiquets_sat (codi_tiquet, id_client, assumpte, descripcio, prioritat, estat, id_tecnic_assignat) VALUES
-('TCK-201', 1, 'Verificació d\'autonomia en fallada elèctrica simulada SAI 3000VA', 'Prova de tall elèctric de 15 minuts realitzada amb èxit. Bateries al 94%, commutació a inversor en 0ms sense caiguda dels switches Cisco.', 'Mitjana', 'Resolt', 3),
-('TCK-202', 2, 'Configuració GPO per a bloqueig d\'USB no autoritzats (RGPD Mèdic)', 'Polítiques de grup creades a l\'OU Equips_Clinica. Pendents de test a la recepció i despatx mèdic principal.', 'Alta', 'En progrés', 2),
-('TCK-203', 3, 'Latència anòmala a la impressora tèrmica de tiquets Caixa 2', 'Revisat cable USB i port COM virtual. S\'ha assignat port estàtic i netejat cua de treball a Windows.', 'Mitjana', 'En progrés', 3),
-('TCK-204', 4, 'Configuració xarxa de convidats amb aïllament d\'equips (Client Isolation)', 'VLAN 50 creada a UniFi Controller amb subnet 192.168.50.0/24 i aïllament L2 total respecte a la xarxa corporativa.', 'Baixa', 'Resolt', 3),
-('TCK-205', 6, 'Revisió d\'espai disponible al volum RAID 5 del NAS Synology', 'Alerta del 85% d\'ocupació. Cal depurar snapshots de més de 90 dies i comprovar quotes per usuari.', 'Alta', 'Pendent', 2);
+('TCK-201', 1, 'Verificació d''autonomia en fallada elèctrica simulada SAI 3000VA', 'Prova de tall elèctric de 15 minuts realitzada amb èxit. Bateries al 94%, commutació a inversor en 0ms sense caiguda dels switches Cisco.', 'Mitjana', 'Resolt', 3),
+('TCK-202', 2, 'Configuració GPO per a bloqueig d''USB no autoritzats (RGPD Mèdic)', 'Polítiques de grup creades a l''OU Equips_Clinica. Pendents de test a la recepció i despatx mèdic principal.', 'Alta', 'En progrés', 2),
+('TCK-203', 3, 'Latència anòmala a la impressora tèrmica de tiquets Caixa 2', 'Revisat cable USB i port COM virtual. S''ha assignat port estàtic i netejat cua de treball a Windows.', 'Mitjana', 'En progrés', 3),
+('TCK-204', 4, 'Configuració xarxa de convidats amb aïllament d''equips (Client Isolation)', 'VLAN 50 creada a UniFi Controller amb subnet 192.168.50.0/24 i aïllament L2 total respecte a la xarxa corporativa.', 'Baixa', 'Resolt', 3),
+('TCK-205', 6, 'Revisió d''espai disponible al volum RAID 5 del NAS Synology', 'Alerta del 85% d''ocupació. Cal depurar snapshots de més de 90 dies i comprovar quotes per usuari.', 'Alta', 'Pendent', 2);
 
 INSERT INTO contactes_web (nom, email, telefon, tipus_servei, missatge) VALUES
 ('Jordi Bosch', 'jbosch@innovatech.barcelona', '654 321 098', 'Cablejat & Racks', 'Necessitem pressupost per cablejar una nova oficina amb 16 llocs de treball i armari rack a Poblenou.');
