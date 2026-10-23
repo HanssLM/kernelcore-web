@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Analytics } from '@vercel/analytics/react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Services from './components/Services';
@@ -38,11 +39,14 @@ export default function App() {
   // Si estem en mode panell de control
   if (view === 'dashboard') {
     return (
-      <Dashboard 
-        user={user} 
-        onLogout={handleLogout} 
-        onBackToSite={() => setView('site')} 
-      />
+      <>
+        <Dashboard 
+          user={user} 
+          onLogout={handleLogout} 
+          onBackToSite={() => setView('site')} 
+        />
+        <Analytics />
+      </>
     );
   }
 
@@ -85,6 +89,9 @@ export default function App() {
 
       {/* Banner de Consentiment Granular de Cookies */}
       <CookieBanner onOpenLegal={openLegal} />
+
+      {/* Vercel Web Analytics */}
+      <Analytics />
     </div>
   );
 }
