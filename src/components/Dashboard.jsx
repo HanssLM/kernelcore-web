@@ -11,6 +11,7 @@ import {
   PanelLeftClose, PanelLeftOpen,
   RotateCcw, LayoutGrid, List, Tag, Factory, ArrowUpDown, AlertTriangle,
   MapPin, User, Flame, Info, Download, ChevronDown, ChevronUp,
+  ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight,
   ShieldCheck, Truck, Users, Filter, Lock,
   Send, UserCheck, Key, Award, FileSignature, Save,
   Network, BatteryCharging, Copy, HardDrive
@@ -539,6 +540,8 @@ export default function Dashboard({ user, onLogout, onBackToSite }) {
   const [inventoryPriceFilter, setInventoryPriceFilter] = useState('all'); // 'all' | 'under100' | '100to500' | '500to1500' | 'over1500'
   const [inventorySortBy, setInventorySortBy] = useState('default');
   const [inventoryViewMode, setInventoryViewMode] = useState('cards'); // 'cards' | 'table'
+  const [inventoryPage, setInventoryPage] = useState(1);
+  const [inventoryItemsPerPage, setInventoryItemsPerPage] = useState(25);
   const [showCategoryDrawer, setShowCategoryDrawer] = useState(false);
   const [isInvesting, setIsInvesting] = useState(false);
   const [investmentToast, setInvestmentToast] = useState(null);
@@ -730,7 +733,7 @@ export default function Dashboard({ user, onLogout, onBackToSite }) {
         const data = await invRes.json().catch(() => null);
         if (Array.isArray(data)) setInventory(data);
       } else if (isSupabaseConfigured && supabase) {
-        const { data: sInv } = await supabase.from('inventari_maquinari').select('*').catch(() => ({ data: null }));
+        const { data: sInv } = await supabase.from('inventari_maquinari').select('*').range(0, 4999).catch(() => ({ data: null }));
         if (Array.isArray(sInv) && sInv.length > 0) {
           setInventory(sInv.map(i => ({
             id: i.id_article,
@@ -1808,6 +1811,7 @@ export default function Dashboard({ user, onLogout, onBackToSite }) {
     setInventoryPriceFilter('all');
     setInventorySortBy('default');
     setSearchQuery('');
+    setInventoryPage(1);
   };
 
   // Articles d'inventari filtrats i ordenats
@@ -1870,6 +1874,17 @@ export default function Dashboard({ user, onLogout, onBackToSite }) {
   const filteredAvgPrice = filteredInventory.length > 0
     ? Math.round(filteredInventory.reduce((acc, i) => acc + (i.price || 0), 0) / filteredInventory.length)
     : 0;
+
+  // Paginació d'alt rendiment per a milers d'articles
+  const totalPages = Math.max(1, Math.ceil(filteredInventory.length / (inventoryItemsPerPage === -1 ? filteredInventory.length || 1 : inventoryItemsPerPage)));
+  const safeInventoryPage = Math.min(Math.max(1, inventoryPage), totalPages);
+  const paginatedInventory = inventoryItemsPerPage === -1
+    ? filteredInventory
+    : filteredInventory.slice((safeInventoryPage - 1) * inventoryItemsPerPage, safeInventoryPage * inventoryItemsPerPage);
+  const pageStartRecord = filteredInventory.length === 0 ? 0 : (safeInventoryPage - 1) * (inventoryItemsPerPage === -1 ? filteredInventory.length : inventoryItemsPerPage) + 1;
+  const pageEndRecord = inventoryItemsPerPage === -1 
+    ? filteredInventory.length 
+    : Math.min(safeInventoryPage * inventoryItemsPerPage, filteredInventory.length);
 
   // Exportació a CSV de la selecció filtrada
   const handleExportCSV = () => {
@@ -4105,10 +4120,79 @@ export default function Dashboard({ user, onLogout, onBackToSite }) {
 
             </div>
 
+            {/* Barra de Paginació Superior */}
+            {filteredInventory.length > 0 && (
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3.5 bg-slate-900/90 border border-slate-800 rounded-2xl text-xs">
+                <div className="flex items-center gap-3 flex-wrap">
+                  <span className="text-slate-400 font-medium">
+                    Mostrant <span className="font-bold text-white font-mono">{pageStartRecord}</span> - <span className="font-bold text-white font-mono">{pageEndRecord}</span> de <span className="font-bold text-cyan-400 font-mono">{filteredInventory.length}</span> SKUs
+                  </span>
+                  <div className="flex items-center gap-1.5">
+                    <span className="text-slate-500 text-[11px]">Per pàgina:</span>
+                    <select
+                      value={inventoryItemsPerPage}
+                      onChange={(e) => {
+                        setInventoryItemsPerPage(Number(e.target.value));
+                        setInventoryPage(1);
+                      }}
+                      className="bg-slate-950 border border-slate-800 text-slate-200 font-bold rounded-lg px-2 py-1 text-xs outline-none focus:border-cyan-500 cursor-pointer"
+                    >
+                      <option value={25}>25</option>
+                      <option value={50}>50</option>
+                      <option value={100}>100</option>
+                      <option value={-1}>Tots ({filteredInventory.length})</option>
+                    </select>
+                  </div>
+                </div>
+
+                {totalPages > 1 && (
+                  <div className="flex items-center gap-1.5 self-end sm:self-center">
+                    <button
+                      onClick={() => setInventoryPage(1)}
+                      disabled={safeInventoryPage === 1}
+                      className="p-1.5 rounded-lg bg-slate-950 border border-slate-800 hover:border-slate-700 text-slate-300 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+                      title="Primera pàgina"
+                    >
+                      <ChevronsLeft className="w-4 h-4" />
+                    </button>
+                    <button
+                      onClick={() => setInventoryPage(prev => Math.max(1, prev - 1))}
+                      disabled={safeInventoryPage === 1}
+                      className="p-1.5 rounded-lg bg-slate-950 border border-slate-800 hover:border-slate-700 text-slate-300 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+                      title="Pàgina anterior"
+                    >
+                      <ChevronLeft className="w-4 h-4" />
+                    </button>
+
+                    <span className="px-3 py-1 bg-slate-950 border border-slate-800 rounded-lg font-mono font-bold text-xs text-cyan-400">
+                      {safeInventoryPage} / {totalPages}
+                    </span>
+
+                    <button
+                      onClick={() => setInventoryPage(prev => Math.min(totalPages, prev + 1))}
+                      disabled={safeInventoryPage === totalPages}
+                      className="p-1.5 rounded-lg bg-slate-950 border border-slate-800 hover:border-slate-700 text-slate-300 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+                      title="Pàgina següent"
+                    >
+                      <ChevronRight className="w-4 h-4" />
+                    </button>
+                    <button
+                      onClick={() => setInventoryPage(totalPages)}
+                      disabled={safeInventoryPage === totalPages}
+                      className="p-1.5 rounded-lg bg-slate-950 border border-slate-800 hover:border-slate-700 text-slate-300 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+                      title="Última pàgina"
+                    >
+                      <ChevronsRight className="w-4 h-4" />
+                    </button>
+                  </div>
+                )}
+              </div>
+            )}
+
             {/* VISTA 1: TARGETES / GRAELLA RESPONSIVA */}
             {inventoryViewMode === 'cards' && (
               <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
-                {filteredInventory.map(item => {
+                {paginatedInventory.map(item => {
                   const isLow = (item.stock || 0) <= (item.min || 0);
                   const lotValuation = (item.stock || 0) * (item.price || 0);
                   const tierColor = (item.tier || '').includes('Bàsic') 
@@ -4229,7 +4313,7 @@ export default function Dashboard({ user, onLogout, onBackToSite }) {
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-slate-800/70">
-                      {filteredInventory.map(item => {
+                      {paginatedInventory.map(item => {
                         const isLow = (item.stock || 0) <= (item.min || 0);
                         const lotValuation = (item.stock || 0) * (item.price || 0);
                         const tierColor = (item.tier || '').includes('Bàsic') 
@@ -4311,6 +4395,67 @@ export default function Dashboard({ user, onLogout, onBackToSite }) {
                       })}
                     </tbody>
                   </table>
+                </div>
+              </div>
+            )}
+
+            {/* Barra de Paginació Inferior */}
+            {filteredInventory.length > 0 && totalPages > 1 && (
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3.5 bg-slate-900/90 border border-slate-800 rounded-2xl text-xs">
+                <span className="text-slate-400 font-medium">
+                  Pàgina <span className="font-bold text-cyan-400 font-mono">{safeInventoryPage}</span> de <span className="font-bold text-white font-mono">{totalPages}</span> · ({filteredInventory.length} articles totals)
+                </span>
+
+                <div className="flex items-center gap-1.5 self-end sm:self-center">
+                  <button
+                    onClick={() => {
+                      setInventoryPage(1);
+                      window.scrollTo({ top: 0, behavior: 'smooth' });
+                    }}
+                    disabled={safeInventoryPage === 1}
+                    className="p-1.5 rounded-lg bg-slate-950 border border-slate-800 hover:border-slate-700 text-slate-300 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+                    title="Primera pàgina"
+                  >
+                    <ChevronsLeft className="w-4 h-4" />
+                  </button>
+                  <button
+                    onClick={() => {
+                      setInventoryPage(prev => Math.max(1, prev - 1));
+                      window.scrollTo({ top: 0, behavior: 'smooth' });
+                    }}
+                    disabled={safeInventoryPage === 1}
+                    className="p-1.5 rounded-lg bg-slate-950 border border-slate-800 hover:border-slate-700 text-slate-300 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+                    title="Pàgina anterior"
+                  >
+                    <ChevronLeft className="w-4 h-4" />
+                  </button>
+
+                  <span className="px-3 py-1 bg-slate-950 border border-slate-800 rounded-lg font-mono font-bold text-xs text-cyan-400">
+                    {safeInventoryPage} / {totalPages}
+                  </span>
+
+                  <button
+                    onClick={() => {
+                      setInventoryPage(prev => Math.min(totalPages, prev + 1));
+                      window.scrollTo({ top: 0, behavior: 'smooth' });
+                    }}
+                    disabled={safeInventoryPage === totalPages}
+                    className="p-1.5 rounded-lg bg-slate-950 border border-slate-800 hover:border-slate-700 text-slate-300 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+                    title="Pàgina següent"
+                  >
+                    <ChevronRight className="w-4 h-4" />
+                  </button>
+                  <button
+                    onClick={() => {
+                      setInventoryPage(totalPages);
+                      window.scrollTo({ top: 0, behavior: 'smooth' });
+                    }}
+                    disabled={safeInventoryPage === totalPages}
+                    className="p-1.5 rounded-lg bg-slate-950 border border-slate-800 hover:border-slate-700 text-slate-300 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+                    title="Última pàgina"
+                  >
+                    <ChevronsRight className="w-4 h-4" />
+                  </button>
                 </div>
               </div>
             )}

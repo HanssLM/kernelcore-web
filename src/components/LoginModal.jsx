@@ -166,52 +166,6 @@ export default function LoginModal({ isOpen, onClose, onLoginSuccess }) {
           </div>
         )}
 
-        {/* Accés ràpid per a la defensa / Tribunal */}
-        <div className="mb-4 p-3 rounded-2xl bg-slate-950/80 border border-slate-800">
-          <p className="text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-2 flex items-center gap-1.5">
-            <Lock className="w-3.5 h-3.5 text-cyan-400" />
-            Accés Ràpid Oficial (1 Clic):
-          </p>
-          <div className="grid grid-cols-3 gap-2">
-            <button
-              type="button"
-              onClick={() => {
-                setEmail('hans@kernelcore.cat');
-                setPassword('HansKernel2026!');
-                setError('');
-              }}
-              className="py-2 px-2 rounded-xl text-xs font-bold bg-slate-900 border border-cyan-500/50 hover:bg-cyan-500 hover:text-slate-950 text-cyan-300 transition-all text-center truncate cursor-pointer shadow-sm"
-              title="Omplir credencials de Hans Lao Moncusi"
-            >
-              Hans Lao
-            </button>
-            <button
-              type="button"
-              onClick={() => {
-                setEmail('admin-kernelcore@kernelcore.com');
-                setPassword('admin1234');
-                setError('');
-              }}
-              className="py-2 px-2 rounded-xl text-xs font-bold bg-slate-900 border border-slate-700 hover:border-slate-500 text-slate-300 hover:text-white transition-all text-center truncate cursor-pointer"
-              title="Omplir credencials d'Administrador"
-            >
-              Admin
-            </button>
-            <button
-              type="button"
-              onClick={() => {
-                setEmail('joel@kernelcore.cat');
-                setPassword('JoelKernel2026!');
-                setError('');
-              }}
-              className="py-2 px-2 rounded-xl text-xs font-bold bg-slate-900 border border-slate-700 hover:border-slate-500 text-slate-300 hover:text-white transition-all text-center truncate cursor-pointer"
-              title="Omplir credencials de Joel Pérez Armenteros"
-            >
-              Joel
-            </button>
-          </div>
-        </div>
-
         {/* Formulari d'Accés */}
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
