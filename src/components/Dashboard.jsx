@@ -11,7 +11,7 @@ import {
   PanelLeftClose, PanelLeftOpen,
   RotateCcw, LayoutGrid, List, Tag, Factory, ArrowUpDown, AlertTriangle,
   MapPin, User, Flame, Info, Download, ChevronDown, ChevronUp,
-  ShieldCheck, Truck, Users, Activity, Filter, Lock,
+  ShieldCheck, Truck, Users, Filter, Lock,
   Send, UserCheck, Key, Award, FileSignature, Fingerprint, Save,
   Network, BatteryCharging, Copy, HardDrive
 } from 'lucide-react';
@@ -2242,55 +2242,6 @@ export default function Dashboard({ user, onLogout, onBackToSite }) {
                 <RefreshCw className={`w-4 h-4 text-cyan-400 relative z-10 ${isSyncing || loading ? 'animate-spin' : 'group-hover:rotate-180 transition-transform duration-500'}`} />
                 <span className="relative z-10 font-bold">{isSyncing ? 'Sincronitzant...' : 'Sincronitzar'}</span>
               </button>
-            </div>
-          </div>
-
-          {/* Barra de Conmutador de Rol en Viu (RBAC: Admin / Hans Lao / Joel Pérez) */}
-          <div className="p-3.5 rounded-2xl bg-slate-900/90 border border-slate-800 flex flex-col lg:flex-row lg:items-center justify-between gap-3">
-            <div className="flex items-center gap-2.5 flex-wrap">
-              <span className="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
-                <User className="w-4 h-4 text-cyan-400" />
-                Conmutador RBAC en Viu:
-              </span>
-              {Object.values(ROLE_PROFILES).map(role => {
-                const isSelected = currentRole.id === role.id;
-                return (
-                  <button
-                    key={role.id}
-                    type="button"
-                    onClick={() => {
-                      setActiveRoleKey(role.id);
-                      if (role.id === 'hans') {
-                        setProjectLeadFilter('hans');
-                        setTicketLeadFilter('hans');
-                      } else if (role.id === 'joel') {
-                        setProjectLeadFilter('joel');
-                        setTicketLeadFilter('joel');
-                      } else {
-                        setProjectLeadFilter('all');
-                        setTicketLeadFilter('all');
-                      }
-                    }}
-                    className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all border flex items-center gap-2 ${
-                      isSelected
-                        ? 'bg-cyan-500 text-slate-950 border-cyan-400 font-black shadow-md'
-                        : 'bg-slate-950 text-slate-300 border-slate-800 hover:border-slate-700 hover:text-white'
-                    }`}
-                  >
-                    <span>{role.nom}</span>
-                    <span className={`text-[10px] px-1.5 py-0.2 rounded font-mono ${
-                      isSelected ? 'bg-slate-950/25 text-slate-950' : 'bg-slate-900 text-slate-400'
-                    }`}>
-                      {role.id === 'admin' ? 'Global' : role.id === 'hans' ? 'Sistemes & AD' : 'Xarxes & SAI'}
-                    </span>
-                  </button>
-                );
-              })}
-            </div>
-
-            <div className="flex items-center gap-2 text-xs text-slate-300 font-medium">
-              <Activity className="w-4 h-4 text-cyan-400 shrink-0" />
-              <span className="truncate">{currentRole.ambit}</span>
             </div>
           </div>
         </div>
