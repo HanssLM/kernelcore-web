@@ -46,36 +46,7 @@ export default function LoginModal({ isOpen, onClose, onLoginSuccess }) {
       const trimmedEmail = (userEmail || '').trim().toLowerCase();
       const trimmedPass = (userPassword || '').trim();
 
-      // 1. Petició d'autenticació al Backend (si està disponible i respon en JSON)
-      const res = await fetch(`${API_BASE}/auth/login`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: trimmedEmail, password: trimmedPass })
-      }).catch(() => null);
-
-      if (res) {
-        const contentType = res.headers.get('content-type') || '';
-        if (contentType.includes('application/json')) {
-          if (res.ok) {
-            const data = await res.json().catch(() => null);
-            if (data?.user) {
-              setIsLoading(false);
-              onLoginSuccess(data.user);
-              return;
-            }
-          } else {
-            const errData = await res.json().catch(() => ({}));
-            if (errData?.error && !res.status.toString().startsWith('5')) {
-              // Si el servidor respon expressament un 400/401 en JSON vàlid
-              setIsLoading(false);
-              setError(errData.error || 'Credencials d\'accés incorrectes.');
-              return;
-            }
-          }
-        }
-      }
-
-      // 2. Fallback de contingència local (ideal per a Vercel o mode fora de línia)
+      // 1. Verificació directa i immediata dels perfils oficials (Ideal per a Vercel i mode autònom)
       const matched = OFFICIAL_PROFILES.find(u => {
         const uEmail = u.email.toLowerCase();
         const username = uEmail.split('@')[0]; // 'hans', 'admin-kernelcore', 'joel'
@@ -103,23 +74,30 @@ export default function LoginModal({ isOpen, onClose, onLoginSuccess }) {
         return;
       }
 
+      // 2. Petició d'autenticació al Backend (per si s'ha creat un nou usuari a la base de dades)
+      const res = await fetch(`${API_BASE}/auth/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: trimmedEmail, password: trimmedPass })
+      }).catch(() => null);
+
+      if (res && res.ok) {
+        const contentType = res.headers.get('content-type') || '';
+        if (contentType.includes('application/json')) {
+          const data = await res.json().catch(() => null);
+          if (data?.user) {
+            setIsLoading(false);
+            onLoginSuccess(data.user);
+            return;
+          }
+        }
+      }
+
       setIsLoading(false);
       setError('Credencials no vàlides. Revisa l\'usuari i la contrasenya.');
 
     } catch (err) {
       console.error('Error d\'autenticació:', err);
-      // Fallback final directe en cas d'error de xarxa
-      const trimmedEmail = (userEmail || '').trim().toLowerCase();
-      const trimmedPass = (userPassword || '').trim();
-      const matched = OFFICIAL_PROFILES.find(u => 
-        (u.email.toLowerCase() === trimmedEmail || u.email.toLowerCase().startsWith(trimmedEmail)) && 
-        (trimmedPass === u.password || (u.id === 2 && trimmedPass.includes('2026')))
-      );
-      if (matched) {
-        setIsLoading(false);
-        onLoginSuccess(matched);
-        return;
-      }
       setIsLoading(false);
       setError('Credencials no vàlides. Revisa l\'usuari i la contrasenya.');
     }
