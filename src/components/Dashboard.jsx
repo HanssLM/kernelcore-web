@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import QuotationHub from './QuotationHub';
 import ProductDetailModal from './ProductDetailModal';
-import { getProductImage } from '../data/productImages';
+import { getProductImage, getFallbackImage } from '../data/productImages';
 import { initialDashboardData } from '../data/dashboardMockData';
 import { 
   LayoutDashboard, FileText, FolderKanban, Package, LifeBuoy,
@@ -4250,7 +4250,7 @@ export default function Dashboard({ user, onLogout, onBackToSite }) {
                           loading="lazy"
                           onError={(e) => {
                             e.currentTarget.onerror = null;
-                            e.currentTarget.src = 'https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&w=800&q=85';
+                            e.currentTarget.src = getFallbackImage(item);
                           }}
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent opacity-80" />
@@ -4431,7 +4431,7 @@ export default function Dashboard({ user, onLogout, onBackToSite }) {
                                   loading="lazy" 
                                   onError={(e) => {
                                     e.currentTarget.onerror = null;
-                                    e.currentTarget.src = 'https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&w=800&q=85';
+                                    e.currentTarget.src = getFallbackImage(item);
                                   }}
                                 />
                               </div>
