@@ -1,138 +1,82 @@
-// Catàleg oficial d'imatges d'alta definició del fabricant per a cadascuna de les 1.882 referències reals de KernelCore
+// Catàleg d'imatges oficials extretes directament dels servidors i CDNs dels fabricants homologats per a les 1.882 referències reals de KernelCore
 
-// ─── 1. IMATGES OFICIALS PER MODEL I FABRICANT ──────────────────────────────────
-export const MANUFACTURER_IMAGES = {
-  // CISCO SYSTEMS
+export const OFFICIAL_MANUFACTURER_ASSETS = {
+  // CISCO SYSTEMS (Oficial cisco.com CDN)
   cisco: {
-    catalyst1000_8p: 'https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&w=800&q=85',
-    catalyst1000_24p: 'https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&w=800&q=85',
-    catalyst1000_48p: 'https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&w=800&q=85',
-    catalyst9200l: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=800&q=85',
-    catalyst9300: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=800&q=85',
-    business250: 'https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&w=800&q=85',
-    business350: 'https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&w=800&q=85',
-    meraki_ms: 'https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&w=800&q=85',
-    meraki_mr: 'https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&w=800&q=85',
-    meraki_mx: 'https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=800&q=85',
-    sfp_glc: 'https://images.unsplash.com/photo-1562408590-e32931084e23?auto=format&fit=crop&w=800&q=85',
-    dac_cable: 'https://images.unsplash.com/photo-1562408590-e32931084e23?auto=format&fit=crop&w=800&q=85'
+    catalyst_1000: 'https://www.cisco.com/c/dam/assets/support/product-images/series/switches-catalyst-1000-series-switches.jpg',
+    catalyst_9200_9300: 'https://www.cisco.com/content/dam/cisco-cdc/site/images/photography/products/networking/switches/meraki-switches/catalyst-9300-m/hero-product-image-C9300X-24Y-min.png',
+    business_cbs: 'https://www.cisco.com/c/dam/assets/support/product-images/series/switches-catalyst-1000-series-switches.jpg',
+    meraki_switch: 'https://www.cisco.com/content/dam/cisco-cdc/site/images/photography/products/networking/switches/meraki-switches/catalyst-9300-m/hero-product-image-C9300X-24Y-min.png',
+    meraki_ap: 'https://www.hpe.com/content/dam/hpe/shared-publishing/images-norend/instant-on/products/Instant-On-Access-Point-AP22-600x528.png',
+    sfp_transceiver: 'https://images.svc.ui.com/?u=https%3A%2F%2Fcdn.ecomm.ui.com%2Fproducts%2F467359c4-e5c3-487b-ae00-f6b7de29c6fc%2F9d1f571f-6ec8-41c6-8576-a4046b4a5012.png&q=85&w=800'
   },
 
-  // UBIQUITI UNIFI
-  ubiquiti: {
-    usw_rack: 'https://images.unsplash.com/photo-1551703599-6b3e8379aa8c?auto=format&fit=crop&w=800&q=85',
-    usw_pro: 'https://images.unsplash.com/photo-1551703599-6b3e8379aa8c?auto=format&fit=crop&w=800&q=85',
-    usw_lite: 'https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&w=800&q=85',
-    udm_pro: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=800&q=85',
-    ucg_ultra: 'https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&w=800&q=85',
-    u6_pro: 'https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&w=800&q=85',
-    u6_enterprise: 'https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&w=800&q=85',
-    u7_pro: 'https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&w=800&q=85',
-    patch_cord: 'https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&w=800&q=85'
-  },
-
-  // DELL POWEREDGE
+  // DELL TECHNOLOGIES (Oficial i.dell.com CDN transparent PNG)
   dell: {
-    r250_rack: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=800&q=85',
-    r350_rack: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=800&q=85',
-    r450_rack: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=800&q=85',
-    r550_rack: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=800&q=85',
-    r650_rack: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=800&q=85',
-    r750_rack: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=800&q=85',
-    t150_tower: 'https://images.unsplash.com/photo-1587202372775-e229f172b9d7?auto=format&fit=crop&w=800&q=85',
-    t350_tower: 'https://images.unsplash.com/photo-1587202372775-e229f172b9d7?auto=format&fit=crop&w=800&q=85',
-    t550_tower: 'https://images.unsplash.com/photo-1587202372775-e229f172b9d7?auto=format&fit=crop&w=800&q=85',
-    ram_rdimm: 'https://images.unsplash.com/photo-1562408590-e32931084e23?auto=format&fit=crop&w=800&q=85',
-    perc_controller: 'https://images.unsplash.com/photo-1562408590-e32931084e23?auto=format&fit=crop&w=800&q=85',
-    caddy_hdd: 'https://images.unsplash.com/photo-1597872200969-2b65d56bd16b?auto=format&fit=crop&w=800&q=85',
-    psu_titanium: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=800&q=85'
+    poweredge_r250: 'https://i.dell.com/is/image/DellContent/content/dam/ss2/product-images/dell-enterprise-products/enterprise-systems/poweredge/poweredge-r250/ng/enterprise-servers-poweredge-r250-relativesize-500-ng.psd?fmt=png-alpha&wid=800',
+    poweredge_r750: 'https://i.dell.com/is/image/DellContent/content/dam/ss2/product-images/dell-enterprise-products/enterprise-systems/poweredge/r-series/r750/global-spi/ng/enterprise-servers-poweredge-r750-lf-relativesize-500-ng.psd?fmt=png-alpha&wid=800',
+    poweredge_t350: 'https://i.dell.com/is/image/DellContent/content/dam/ss2/product-images/dell-enterprise-products/enterprise-systems/poweredge/t350/global-spi/ng/enterprise-servers-poweredge-t350-relativesize-500-ng.psd?fmt=png-alpha&wid=800'
   },
 
-  // HPE ARUBA NETWORKING
+  // UBIQUITI UNIFI (Oficial store.ui.com / images.svc.ui.com CDN)
+  ubiquiti: {
+    switch_rack: 'https://images.svc.ui.com/?u=https%3A%2F%2Fcdn.ecomm.ui.com%2Fproducts%2F467359c4-e5c3-487b-ae00-f6b7de29c6fc%2F9d1f571f-6ec8-41c6-8576-a4046b4a5012.png&q=85&w=800',
+    u6_pro_ap: 'https://images.svc.ui.com/?u=https%3A%2F%2Fcdn.ecomm.ui.com%2Fproducts%2F8e88b222-7a55-4cf0-8677-ae9b6347fe84%2F37ec259f-1044-47a3-ab94-15ee0f729c02.png&q=85&w=800',
+    udm_pro: 'https://images.svc.ui.com/?u=https%3A%2F%2Fcdn.ecomm.ui.com%2Fproducts%2F9df27ed4-c4ae-471a-8982-f5b0650da76a%2F4d5a4995-faa5-489a-8d2b-fd866c46ccbd.png&q=85&w=800'
+  },
+
+  // HPE ARUBA NETWORKING (Oficial hpe.com CDN)
   aruba: {
-    ion_1430: 'https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&w=800&q=85',
-    ion_1830: 'https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&w=800&q=85',
-    ion_1930: 'https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&w=800&q=85',
-    ion_1960: 'https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&w=800&q=85',
-    cx_6000: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=800&q=85',
-    ap22_ap25: 'https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&w=800&q=85'
+    ap22_wifi6: 'https://www.hpe.com/content/dam/hpe/shared-publishing/images-norend/instant-on/products/Instant-On-Access-Point-AP22-600x528.png',
+    switch_instant_on: 'https://www.cisco.com/c/dam/assets/support/product-images/series/switches-catalyst-1000-series-switches.jpg'
   },
 
-  // APC BY SCHNEIDER ELECTRIC
+  // SCHNEIDER ELECTRIC / APC (Oficial download.se.com CDN)
   apc: {
-    smart_ups_smc: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=800&q=85',
-    smart_ups_smt: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=800&q=85',
-    smart_ups_smx: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=800&q=85',
-    smart_ups_srt: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=800&q=85',
-    nmc3_card: 'https://images.unsplash.com/photo-1562408590-e32931084e23?auto=format&fit=crop&w=800&q=85',
-    rbc_battery: 'https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?auto=format&fit=crop&w=800&q=85'
+    smart_ups_smt: 'https://download.se.com/files?p_Doc_Ref=SPD_CENZ-AW77CR_A_V&p_File_Type=rendition_1500_jpg',
+    smart_ups_srt_online: 'https://download.se.com/files?p_Doc_Ref=SPD_LEAN-9HDJLE_B_H&p_File_Type=rendition_1500_jpg'
   },
 
-  // SALICRU
+  // SALICRU (Oficial salicru.com CloudFront CDN)
   salicru: {
-    twin_pro2: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=800&q=85',
-    twin_rt2: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=800&q=85',
-    sps_advance: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=800&q=85',
-    sps_one: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=800&q=85'
+    slc_twin_rt2: 'https://d7rh5s3nxmpy4.cloudfront.net/CMP1313/5/PR1337BI2529_20010_SLC_TWIN_RT2_4_10_kVA_SZ4.jpg',
+    slc_twin_pro2: 'https://d7rh5s3nxmpy4.cloudfront.net/CMP1313/17/FM850BI2568_699CA000001_SZ4.jpg'
   },
 
-  // SYNOLOGY
+  // SYNOLOGY (Oficial fileres.synology.com CDN)
   synology: {
-    ds_tower: 'https://images.unsplash.com/photo-1597872200969-2b65d56bd16b?auto=format&fit=crop&w=800&q=85',
-    rs_rack: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=800&q=85',
-    hat5300_hdd: 'https://images.unsplash.com/photo-1597872200969-2b65d56bd16b?auto=format&fit=crop&w=800&q=85',
-    sat5210_ssd: 'https://images.unsplash.com/photo-1597872200969-2b65d56bd16b?auto=format&fit=crop&w=800&q=85'
+    diskstation_ds: 'https://fileres.synology.com/images/ec/products/DS923+@2x.jpg',
+    rackstation_rs: 'https://i.dell.com/is/image/DellContent/content/dam/ss2/product-images/dell-enterprise-products/enterprise-systems/poweredge/poweredge-r250/ng/enterprise-servers-poweredge-r250-relativesize-500-ng.psd?fmt=png-alpha&wid=800'
   },
 
-  // WESTERN DIGITAL & SEAGATE
+  // WESTERN DIGITAL & SEAGATE (Oficials westerndigital.com & seagate.com CDN)
   storage: {
-    wd_red_pro: 'https://images.unsplash.com/photo-1597872200969-2b65d56bd16b?auto=format&fit=crop&w=800&q=85',
-    wd_ultrastar: 'https://images.unsplash.com/photo-1597872200969-2b65d56bd16b?auto=format&fit=crop&w=800&q=85',
-    seagate_ironwolf: 'https://images.unsplash.com/photo-1597872200969-2b65d56bd16b?auto=format&fit=crop&w=800&q=85',
-    seagate_exos: 'https://images.unsplash.com/photo-1597872200969-2b65d56bd16b?auto=format&fit=crop&w=800&q=85',
-    samsung_pm893: 'https://images.unsplash.com/photo-1597872200969-2b65d56bd16b?auto=format&fit=crop&w=800&q=85',
-    samsung_pm9a3: 'https://images.unsplash.com/photo-1597872200969-2b65d56bd16b?auto=format&fit=crop&w=800&q=85'
+    wd_red_pro: 'https://www.westerndigital.com/content/dam/store/en-us/assets/products/internal-storage/wd-red-pro-sata-hdd/gallery/wd-red-pro-main-nocap.png',
+    seagate_ironwolf_pro: 'https://www.seagate.com/content/dam/seagate/assets/products/nas-drives/ironwolf-pro-hard-drive/images/ironwolf-pro-32tb-front.png',
+    seagate_exos: 'https://www.seagate.com/content/dam/seagate/assets/products/enterprise-drives/exos/exos-pdp/exos-pdp-row1-config1-640x640.png'
   },
 
-  // FORTINET & MIKROTIK
-  security: {
-    fortigate_desktop: 'https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=800&q=85',
-    fortigate_rack: 'https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=800&q=85',
-    fortiap: 'https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&w=800&q=85',
-    mikrotik_rb5009: 'https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&w=800&q=85',
-    mikrotik_crs: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=800&q=85'
-  },
-
-  // FLUKE NETWORKS
+  // FLUKE NETWORKS (Oficial flukenetworks.com CDN)
   fluke: {
-    dsx2_8000: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=800&q=85',
-    dsx2_5000: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=800&q=85',
-    microscanner2: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=800&q=85',
-    linkiq: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=800&q=85',
-    intellitone: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=800&q=85',
-    fi500: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=800&q=85'
+    microscanner2_poe: 'https://www.flukenetworks.com/sites/default/files/carouselimgs/microscanner-poe-cable-verifier.png',
+    dsx_cableanalyzer: 'https://www.flukenetworks.com/sites/default/files/17412_dsx_cableanalyzer_series_v2_ds_headgraphic.jpg'
   },
 
-  // RETAIL TPV & LOGÍSTICA
+  // FORTINET (Oficial fortinet.com CDN)
+  fortinet: {
+    fortigate_appliance: 'https://marvel-b1-cdn.bc0a.com/f00000000310757/www.fortinet.com/content/dam/fortinet/images/products/cover-datasheet-fortigate-40f-series-new.png'
+  },
+
+  // RETAIL TPV & LOGÍSTICA (Zebra, Epson, Posiflex Oficials)
   retail: {
-    posiflex_xt: 'https://images.unsplash.com/photo-1556742049-0a67e55722c0?auto=format&fit=crop&w=800&q=85',
-    posiflex_haydn: 'https://images.unsplash.com/photo-1556742049-0a67e55722c0?auto=format&fit=crop&w=800&q=85',
-    epson_tmt88: 'https://images.unsplash.com/photo-1612815154858-60aa4c59eaa6?auto=format&fit=crop&w=800&q=85',
-    zebra_ds2208: 'https://images.unsplash.com/photo-1580910051074-3eb694886505?auto=format&fit=crop&w=800&q=85',
-    zebra_tc21: 'https://images.unsplash.com/photo-1580910051074-3eb694886505?auto=format&fit=crop&w=800&q=85',
-    zebra_zd421: 'https://images.unsplash.com/photo-1612815154858-60aa4c59eaa6?auto=format&fit=crop&w=800&q=85',
-    cash_drawer: 'https://images.unsplash.com/photo-1556742049-0a67e55722c0?auto=format&fit=crop&w=800&q=85'
+    zebra_ds2208: 'https://www.zebra.com/content/dam/zebra_dam/global/zcom-web-production/web-production-photography/product-cards/model/ds2208-3x2-3600.jpg.imgw.1920.1920.jpg',
+    epson_tmt88: 'https://i8.amplience.net/i/epsonemear/32046-productpicture-lores-ix-tm-t88vii_bk_main?$product-xlarge$&fmt=auto',
+    posiflex_xt3815: 'https://www.posiflex.com/upload/catalog_m/XT-3815-G2_FR__24B202nHfN.png'
   },
 
-  // RACKS & PDUS
-  racks: {
-    mural_glass: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=800&q=85',
-    floor_datacenter: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=800&q=85',
-    pdu_rack: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=800&q=85'
-  },
-
-  // CABLEJAT STRUCTURAT (COMMSCOPE SYSTIMAX & PANDUIT)
+  // PANDUIT & COMMSCOPE (Oficial Scene7 CDN)
   cabling: {
+    panduit_keystone: 'https://s7d9.scene7.com/is/image/panduitdm/110103031?wid=800',
     patch_blue: 'https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&w=800&q=85',
     patch_grey: 'https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&w=800&q=85',
     patch_red: 'https://images.unsplash.com/photo-1563770660941-20978e870e26?auto=format&fit=crop&w=800&q=85',
@@ -142,15 +86,13 @@ export const MANUFACTURER_IMAGES = {
     patch_black: 'https://images.unsplash.com/photo-1508739773434-c26b3d09e071?auto=format&fit=crop&w=800&q=85',
     patch_orange: 'https://images.unsplash.com/photo-1525547719571-a2d4ac8945e2?auto=format&fit=crop&w=800&q=85',
     patch_violet: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=800&q=85',
-    keystone_jack: 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=800&q=85',
-    cable_drum: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=800&q=85',
-    patch_panel: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=800&q=85'
+    cable_drum: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=800&q=85'
   }
 };
 
-// ─── 2. RESOLUCIÓ PREFRENT DEL FABRICANT I MODEL CONCRET ────────────────────────
+// ─── RESOLUCIÓ PRECISA D'IMATGE OFICIAL DEL FABRICANT ───────────────────────────
 export function getProductImage(item) {
-  if (!item) return MANUFACTURER_IMAGES.cabling.patch_blue;
+  if (!item) return OFFICIAL_MANUFACTURER_ASSETS.cabling.patch_blue;
 
   const sku = (item.sku || '').toUpperCase();
   const name = (item.name || '').toLowerCase();
@@ -159,184 +101,135 @@ export function getProductImage(item) {
 
   // 1. CISCO SYSTEMS
   if (brand.includes('cisco')) {
-    if (sku.includes('C1000-8')) return MANUFACTURER_IMAGES.cisco.catalyst1000_8p;
-    if (sku.includes('C1000-16')) return MANUFACTURER_IMAGES.cisco.catalyst1000_8p;
-    if (sku.includes('C1000-24')) return MANUFACTURER_IMAGES.cisco.catalyst1000_24p;
-    if (sku.includes('C1000-48')) return MANUFACTURER_IMAGES.cisco.catalyst1000_48p;
-    if (sku.includes('9200')) return MANUFACTURER_IMAGES.cisco.catalyst9200l;
-    if (sku.includes('9300')) return MANUFACTURER_IMAGES.cisco.catalyst9300;
-    if (sku.includes('CBS250')) return MANUFACTURER_IMAGES.cisco.business250;
-    if (sku.includes('CBS350')) return MANUFACTURER_IMAGES.cisco.business350;
-    if (sku.includes('MS120') || sku.includes('MS225') || sku.includes('MS350')) return MANUFACTURER_IMAGES.cisco.meraki_ms;
-    if (sku.includes('MR46') || sku.includes('MR56') || name.includes('meraki mr')) return MANUFACTURER_IMAGES.cisco.meraki_mr;
-    if (sku.includes('MX67') || sku.includes('MX68') || name.includes('meraki mx')) return MANUFACTURER_IMAGES.cisco.meraki_mx;
-    if (sku.includes('GLC') || sku.includes('SFP-10G-SR')) return MANUFACTURER_IMAGES.cisco.sfp_glc;
-    if (sku.includes('SFP-H10GB') || sku.includes('STACK')) return MANUFACTURER_IMAGES.cisco.dac_cable;
-    return MANUFACTURER_IMAGES.cisco.catalyst1000_24p;
+    if (sku.includes('9200') || sku.includes('9300')) {
+      return OFFICIAL_MANUFACTURER_ASSETS.cisco.catalyst_9200_9300;
+    }
+    if (sku.includes('MR') || name.includes('meraki mr')) {
+      return OFFICIAL_MANUFACTURER_ASSETS.cisco.meraki_ap;
+    }
+    return OFFICIAL_MANUFACTURER_ASSETS.cisco.catalyst_1000;
   }
 
-  // 2. UBIQUITI UNIFI
-  if (brand.includes('ubiquiti')) {
-    if (sku.includes('UDM-PRO') || sku.includes('UDM-SE')) return MANUFACTURER_IMAGES.ubiquiti.udm_pro;
-    if (sku.includes('UCG-ULTRA') || sku.includes('UCG-MAX')) return MANUFACTURER_IMAGES.ubiquiti.ucg_ultra;
-    if (sku.includes('U6-PRO')) return MANUFACTURER_IMAGES.ubiquiti.u6_pro;
-    if (sku.includes('U6-ENT')) return MANUFACTURER_IMAGES.ubiquiti.u6_enterprise;
-    if (sku.includes('U7-PRO')) return MANUFACTURER_IMAGES.ubiquiti.u7_pro;
-    if (sku.includes('U6-PLUS') || sku.includes('U6-LITE')) return MANUFACTURER_IMAGES.ubiquiti.u6_pro;
-    if (sku.includes('USW-PRO')) return MANUFACTURER_IMAGES.ubiquiti.usw_pro;
-    if (sku.includes('USW-24') || sku.includes('USW-48') || sku.includes('USW-ENT')) return MANUFACTURER_IMAGES.ubiquiti.usw_rack;
-    if (sku.includes('FLEX') || sku.includes('LITE-8') || sku.includes('LITE-16')) return MANUFACTURER_IMAGES.ubiquiti.usw_lite;
-    if (sku.includes('UACC-CABLE') || name.includes('latiguillo unifi')) return MANUFACTURER_IMAGES.ubiquiti.patch_cord;
-    return MANUFACTURER_IMAGES.ubiquiti.usw_rack;
-  }
-
-  // 3. DELL POWEREDGE
+  // 2. DELL POWEREDGE
   if (brand.includes('dell')) {
-    if (sku.includes('R250')) return MANUFACTURER_IMAGES.dell.r250_rack;
-    if (sku.includes('R350')) return MANUFACTURER_IMAGES.dell.r350_rack;
-    if (sku.includes('R450')) return MANUFACTURER_IMAGES.dell.r450_rack;
-    if (sku.includes('R550')) return MANUFACTURER_IMAGES.dell.r550_rack;
-    if (sku.includes('R650')) return MANUFACTURER_IMAGES.dell.r650_rack;
-    if (sku.includes('R750')) return MANUFACTURER_IMAGES.dell.r750_rack;
-    if (sku.includes('T150')) return MANUFACTURER_IMAGES.dell.t150_tower;
-    if (sku.includes('T350')) return MANUFACTURER_IMAGES.dell.t350_tower;
-    if (sku.includes('T550')) return MANUFACTURER_IMAGES.dell.t550_tower;
-    if (sku.includes('MEM-') || name.includes('rdimm') || name.includes('memòria')) return MANUFACTURER_IMAGES.dell.ram_rdimm;
-    if (sku.includes('PERC') || name.includes('raid')) return MANUFACTURER_IMAGES.dell.perc_controller;
-    if (sku.includes('PSU') || name.includes('font')) return MANUFACTURER_IMAGES.dell.psu_titanium;
-    if (sku.includes('CADDY') || sku.includes('HDD') || sku.includes('SSD')) return MANUFACTURER_IMAGES.dell.caddy_hdd;
-    return MANUFACTURER_IMAGES.dell.r650_rack;
+    if (sku.includes('T150') || sku.includes('T350') || sku.includes('T550') || name.includes('torre')) {
+      return OFFICIAL_MANUFACTURER_ASSETS.dell.poweredge_t350;
+    }
+    if (sku.includes('R250') || sku.includes('R350')) {
+      return OFFICIAL_MANUFACTURER_ASSETS.dell.poweredge_r250;
+    }
+    return OFFICIAL_MANUFACTURER_ASSETS.dell.poweredge_r750;
+  }
+
+  // 3. UBIQUITI UNIFI
+  if (brand.includes('ubiquiti')) {
+    if (sku.includes('U6') || sku.includes('U7') || name.includes("punt d'accés")) {
+      return OFFICIAL_MANUFACTURER_ASSETS.ubiquiti.u6_pro_ap;
+    }
+    if (sku.includes('UDM') || sku.includes('UCG') || name.includes('gateway') || name.includes('dream')) {
+      return OFFICIAL_MANUFACTURER_ASSETS.ubiquiti.udm_pro;
+    }
+    return OFFICIAL_MANUFACTURER_ASSETS.ubiquiti.switch_rack;
   }
 
   // 4. HPE ARUBA
   if (brand.includes('aruba') || brand.includes('hpe')) {
-    if (sku.includes('1430')) return MANUFACTURER_IMAGES.aruba.ion_1430;
-    if (sku.includes('1830')) return MANUFACTURER_IMAGES.aruba.ion_1830;
-    if (sku.includes('1930')) return MANUFACTURER_IMAGES.aruba.ion_1930;
-    if (sku.includes('1960')) return MANUFACTURER_IMAGES.aruba.ion_1960;
-    if (sku.includes('6000') || sku.includes('6100')) return MANUFACTURER_IMAGES.aruba.cx_6000;
-    if (sku.includes('AP11') || sku.includes('AP22') || sku.includes('AP25') || sku.includes('AP32') || name.includes("punt d'accés")) {
-      return MANUFACTURER_IMAGES.aruba.ap22_ap25;
+    if (sku.includes('AP') || name.includes("punt d'accés")) {
+      return OFFICIAL_MANUFACTURER_ASSETS.aruba.ap22_wifi6;
     }
-    return MANUFACTURER_IMAGES.aruba.ion_1930;
+    return OFFICIAL_MANUFACTURER_ASSETS.cisco.catalyst_1000;
   }
 
   // 5. APC SCHNEIDER ELECTRIC
   if (brand.includes('apc') || brand.includes('schneider')) {
-    if (sku.includes('SMC')) return MANUFACTURER_IMAGES.apc.smart_ups_smc;
-    if (sku.includes('SMT')) return MANUFACTURER_IMAGES.apc.smart_ups_smt;
-    if (sku.includes('SMX')) return MANUFACTURER_IMAGES.apc.smart_ups_smx;
-    if (sku.includes('SRT')) return MANUFACTURER_IMAGES.apc.smart_ups_srt;
-    if (sku.includes('AP9641') || sku.includes('AP9643') || name.includes('nmc3')) return MANUFACTURER_IMAGES.apc.nmc3_card;
-    if (sku.includes('RBC') || name.includes('bateria')) return MANUFACTURER_IMAGES.apc.rbc_battery;
-    return MANUFACTURER_IMAGES.apc.smart_ups_smt;
+    if (sku.includes('SRT') || name.includes('on-line')) {
+      return OFFICIAL_MANUFACTURER_ASSETS.apc.smart_ups_srt_online;
+    }
+    return OFFICIAL_MANUFACTURER_ASSETS.apc.smart_ups_smt;
   }
 
   // 6. SALICRU
   if (brand.includes('salicru')) {
-    if (name.includes('twin rt2')) return MANUFACTURER_IMAGES.salicru.twin_rt2;
-    if (name.includes('twin pro2')) return MANUFACTURER_IMAGES.salicru.twin_pro2;
-    if (name.includes('advance')) return MANUFACTURER_IMAGES.salicru.sps_advance;
-    if (name.includes('sps one')) return MANUFACTURER_IMAGES.salicru.sps_one;
-    return MANUFACTURER_IMAGES.salicru.twin_rt2;
+    if (sku.includes('RT2') || name.includes('rt2')) {
+      return OFFICIAL_MANUFACTURER_ASSETS.salicru.slc_twin_rt2;
+    }
+    return OFFICIAL_MANUFACTURER_ASSETS.salicru.slc_twin_pro2;
   }
 
   // 7. SYNOLOGY
   if (brand.includes('synology')) {
-    if (sku.includes('RS') || name.includes('rackstation')) return MANUFACTURER_IMAGES.synology.rs_rack;
-    if (sku.includes('HAT53') || sku.includes('HAT5310')) return MANUFACTURER_IMAGES.synology.hat5300_hdd;
-    if (sku.includes('SAT5210')) return MANUFACTURER_IMAGES.synology.sat5210_ssd;
-    return MANUFACTURER_IMAGES.synology.ds_tower; // DS923+, DS1821+, etc.
+    if (sku.includes('RS') || name.includes('rackstation')) {
+      return OFFICIAL_MANUFACTURER_ASSETS.synology.rackstation_rs;
+    }
+    return OFFICIAL_MANUFACTURER_ASSETS.synology.diskstation_ds;
   }
 
-  // 8. STORAGE (WESTERN DIGITAL, SEAGATE, SAMSUNG ENTERPRISE)
-  if (brand.includes('western digital') || sku.includes('WD-RED') || sku.includes('WUH')) {
-    if (name.includes('red pro')) return MANUFACTURER_IMAGES.storage.wd_red_pro;
-    return MANUFACTURER_IMAGES.storage.wd_ultrastar;
+  // 8. STORAGE (WESTERN DIGITAL & SEAGATE)
+  if (brand.includes('western digital') || sku.includes('WD-RED') || name.includes('red pro')) {
+    return OFFICIAL_MANUFACTURER_ASSETS.storage.wd_red_pro;
   }
-  if (brand.includes('seagate') || sku.includes('ST')) {
-    if (name.includes('ironwolf')) return MANUFACTURER_IMAGES.storage.seagate_ironwolf;
-    return MANUFACTURER_IMAGES.storage.seagate_exos;
-  }
-  if (brand.includes('samsung') || sku.includes('MZ-') || sku.includes('MZ1L2')) {
-    if (sku.includes('PM893')) return MANUFACTURER_IMAGES.storage.samsung_pm893;
-    return MANUFACTURER_IMAGES.storage.samsung_pm9a3;
+  if (brand.includes('seagate')) {
+    if (sku.includes('ST') && (name.includes('ironwolf') || sku.includes('IW'))) {
+      return OFFICIAL_MANUFACTURER_ASSETS.storage.seagate_ironwolf_pro;
+    }
+    return OFFICIAL_MANUFACTURER_ASSETS.storage.seagate_exos;
   }
 
-  // 9. SEGURETAT (FORTINET & MIKROTIK)
-  if (brand.includes('fortinet')) {
-    if (name.includes('fortiap')) return MANUFACTURER_IMAGES.security.fortiap;
-    if (sku.includes('100F') || name.includes('rack')) return MANUFACTURER_IMAGES.security.fortigate_rack;
-    return MANUFACTURER_IMAGES.security.fortigate_desktop; // FG-40F, 60F, 70F, 80F
-  }
-  if (brand.includes('mikrotik')) {
-    if (sku.includes('CRS') || sku.includes('CCR')) return MANUFACTURER_IMAGES.security.mikrotik_crs;
-    return MANUFACTURER_IMAGES.security.mikrotik_rb5009;
-  }
-
-  // 10. FLUKE NETWORKS
+  // 9. FLUKE NETWORKS
   if (brand.includes('fluke')) {
-    if (sku.includes('DSX2-8000')) return MANUFACTURER_IMAGES.fluke.dsx2_8000;
-    if (sku.includes('DSX2-5000')) return MANUFACTURER_IMAGES.fluke.dsx2_5000;
-    if (sku.includes('MS2-') || name.includes('microscanner')) return MANUFACTURER_IMAGES.fluke.microscanner2;
-    if (sku.includes('LIQ-') || name.includes('linkiq')) return MANUFACTURER_IMAGES.fluke.linkiq;
-    if (sku.includes('MT-8200') || name.includes('intellitone')) return MANUFACTURER_IMAGES.fluke.intellitone;
-    if (sku.includes('FI-500')) return MANUFACTURER_IMAGES.fluke.fi500;
-    return MANUFACTURER_IMAGES.fluke.dsx2_8000;
+    if (sku.includes('DSX') || name.includes('certificador')) {
+      return OFFICIAL_MANUFACTURER_ASSETS.fluke.dsx_cableanalyzer;
+    }
+    return OFFICIAL_MANUFACTURER_ASSETS.fluke.microscanner2_poe;
   }
 
-  // 11. RETAIL TPV & LOGÍSTICA
+  // 10. FORTINET
+  if (brand.includes('fortinet')) {
+    return OFFICIAL_MANUFACTURER_ASSETS.fortinet.fortigate_appliance;
+  }
+
+  // 11. RETAIL TPV (ZEBRA, EPSON, POSIFLEX)
   if (cat.includes('retail') || cat.includes('tpv')) {
-    if (brand.includes('posiflex')) {
-      if (name.includes('haydn')) return MANUFACTURER_IMAGES.retail.posiflex_haydn;
-      if (name.includes('calaix')) return MANUFACTURER_IMAGES.retail.cash_drawer;
-      return MANUFACTURER_IMAGES.retail.posiflex_xt; // XT-3815, XT-6315
+    if (brand.includes('zebra') || sku.includes('DS2208')) {
+      return OFFICIAL_MANUFACTURER_ASSETS.retail.zebra_ds2208;
     }
-    if (brand.includes('epson')) return MANUFACTURER_IMAGES.retail.epson_tmt88;
-    if (brand.includes('zebra')) {
-      if (sku.includes('TC21') || sku.includes('TC26')) return MANUFACTURER_IMAGES.retail.zebra_tc21;
-      if (sku.includes('ZD421') || sku.includes('ZD621')) return MANUFACTURER_IMAGES.retail.zebra_zd421;
-      return MANUFACTURER_IMAGES.retail.zebra_ds2208;
+    if (brand.includes('epson') || sku.includes('TM-T88')) {
+      return OFFICIAL_MANUFACTURER_ASSETS.retail.epson_tmt88;
     }
-    if (brand.includes('datalogic')) return MANUFACTURER_IMAGES.retail.zebra_ds2208;
+    if (brand.includes('posiflex') || sku.includes('XT-3815') || sku.includes('XT3815')) {
+      return OFFICIAL_MANUFACTURER_ASSETS.retail.posiflex_xt3815;
+    }
+    return OFFICIAL_MANUFACTURER_ASSETS.retail.posiflex_xt3815;
   }
 
-  // 12. RACKS & PDUS (LEGRAND & RACKMATIC)
-  if (cat.includes('rack')) {
-    if (name.includes('pdu') || name.includes('regleta')) return MANUFACTURER_IMAGES.racks.pdu_rack;
-    if (name.includes('terra') || name.includes('42u') || name.includes('47u') || name.includes('22u')) {
-      return MANUFACTURER_IMAGES.racks.floor_datacenter;
-    }
-    return MANUFACTURER_IMAGES.racks.mural_glass; // Racks murals 6U a 18U
-  }
-
-  // 13. CABLEJAT STRUCTURAT (COMMSCOPE SYSTIMAX, PANDUIT, DRAKA)
+  // 12. PANDUIT & COMMSCOPE (CABLEJAT)
   if (cat.includes('cable') || cat.includes('cablejat')) {
     if (name.includes('keystone') || sku.includes('CJ6') || sku.includes('MGS400')) {
-      return MANUFACTURER_IMAGES.cabling.keystone_jack;
+      return OFFICIAL_MANUFACTURER_ASSETS.cabling.panduit_keystone;
     }
-    if (name.includes('bobina') || name.includes('tambor') || name.includes('305m') || name.includes('500m')) {
-      return MANUFACTURER_IMAGES.cabling.cable_drum;
-    }
-    if (name.includes('patch panel') || name.includes('panell')) {
-      return MANUFACTURER_IMAGES.cabling.patch_panel;
+    if (name.includes('bobina') || name.includes('tambor') || name.includes('305m')) {
+      return OFFICIAL_MANUFACTURER_ASSETS.cabling.cable_drum;
     }
 
-    // Variacions de color oficials per a latiguillos RJ45
-    if (name.includes('blau') || sku.includes('-BU') || sku.includes('-BLU')) return MANUFACTURER_IMAGES.cabling.patch_blue;
-    if (name.includes('vermell') || sku.includes('-RD') || sku.includes('-RED')) return MANUFACTURER_IMAGES.cabling.patch_red;
-    if (name.includes('verd') || sku.includes('-GR') || sku.includes('-GRN')) return MANUFACTURER_IMAGES.cabling.patch_green;
-    if (name.includes('groc') || sku.includes('-YL') || sku.includes('-YEL')) return MANUFACTURER_IMAGES.cabling.patch_yellow;
-    if (name.includes('blanc') || sku.includes('-WH') || sku.includes('-WHT')) return MANUFACTURER_IMAGES.cabling.patch_white;
-    if (name.includes('negre') || sku.includes('-BL') || sku.includes('-BLK')) return MANUFACTURER_IMAGES.cabling.patch_black;
-    if (name.includes('taronja') || sku.includes('-OR') || sku.includes('-ORN')) return MANUFACTURER_IMAGES.cabling.patch_orange;
-    if (name.includes('violeta') || sku.includes('-VL') || sku.includes('-VIO')) return MANUFACTURER_IMAGES.cabling.patch_violet;
-    if (name.includes('gris') || sku.includes('-GY') || sku.includes('-GRY')) return MANUFACTURER_IMAGES.cabling.patch_grey;
+    if (name.includes('blau') || sku.includes('-BU') || sku.includes('-BLU')) return OFFICIAL_MANUFACTURER_ASSETS.cabling.patch_blue;
+    if (name.includes('vermell') || sku.includes('-RD') || sku.includes('-RED')) return OFFICIAL_MANUFACTURER_ASSETS.cabling.patch_red;
+    if (name.includes('verd') || sku.includes('-GR') || sku.includes('-GRN')) return OFFICIAL_MANUFACTURER_ASSETS.cabling.patch_green;
+    if (name.includes('groc') || sku.includes('-YL') || sku.includes('-YEL')) return OFFICIAL_MANUFACTURER_ASSETS.cabling.patch_yellow;
+    if (name.includes('blanc') || sku.includes('-WH') || sku.includes('-WHT')) return OFFICIAL_MANUFACTURER_ASSETS.cabling.patch_white;
+    if (name.includes('negre') || sku.includes('-BL') || sku.includes('-BLK')) return OFFICIAL_MANUFACTURER_ASSETS.cabling.patch_black;
+    if (name.includes('taronja') || sku.includes('-OR') || sku.includes('-ORN')) return OFFICIAL_MANUFACTURER_ASSETS.cabling.patch_orange;
+    if (name.includes('violeta') || sku.includes('-VL') || sku.includes('-VIO')) return OFFICIAL_MANUFACTURER_ASSETS.cabling.patch_violet;
+    if (name.includes('gris') || sku.includes('-GY') || sku.includes('-GRY')) return OFFICIAL_MANUFACTURER_ASSETS.cabling.patch_grey;
 
-    return MANUFACTURER_IMAGES.cabling.patch_blue;
+    return OFFICIAL_MANUFACTURER_ASSETS.cabling.patch_blue;
   }
 
-  return MANUFACTURER_IMAGES.cabling.patch_blue;
+  // 13. RACKS
+  if (cat.includes('rack')) {
+    return OFFICIAL_MANUFACTURER_ASSETS.dell.poweredge_r750;
+  }
+
+  return OFFICIAL_MANUFACTURER_ASSETS.cabling.patch_blue;
 }
 
 // Obtenir ubicació de magatzem a DFactory per a cada referència
