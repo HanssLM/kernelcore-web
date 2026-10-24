@@ -16,7 +16,8 @@ import {
   ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight,
   ShieldCheck, Truck, Users, Filter, Lock,
   Send, UserCheck, Key, Award, FileSignature, Save,
-  Network, BatteryCharging, Copy, HardDrive
+  Network, BatteryCharging, Copy, HardDrive,
+  Camera
 } from 'lucide-react';
 import { API_BASE, BACKEND_URL } from '../config/api';
 import { supabase, isSupabaseConfigured } from '../lib/supabaseClient';
@@ -1020,6 +1021,20 @@ export default function Dashboard({ user, onLogout, onBackToSite }) {
       });
     } catch (e) {
       console.error(e);
+    }
+  };
+
+  const handleUpdateImage = (itemId, newImageUrl) => {
+    setInventory(prev => prev.map(item =>
+      item.id === itemId ? { ...item, custom_image: newImageUrl } : item
+    ));
+
+    if (selectedProductModal && selectedProductModal.id === itemId) {
+      setSelectedProductModal(prev => prev ? { ...prev, custom_image: newImageUrl } : null);
+    }
+
+    if (isSupabaseConfigured && supabase) {
+      supabase.from('inventari_maquinari').update({ imatge_url: newImageUrl }).eq('id_article', itemId).then(() => {}).catch(() => {});
     }
   };
 
@@ -4268,6 +4283,20 @@ export default function Dashboard({ user, onLogout, onBackToSite }) {
                             {item.tier || 'Standard'}
                           </span>
                         </div>
+
+                        {/* Botó ràpid per canviar o pujar imatge */}
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setSelectedProductModal(item);
+                          }}
+                          className="absolute bottom-2.5 right-3 px-2 py-0.5 rounded text-[11px] font-bold bg-slate-950/90 hover:bg-cyan-500 hover:text-slate-950 text-slate-300 border border-slate-700/80 shadow backdrop-blur-sm transition-all cursor-pointer flex items-center gap-1 opacity-80 group-hover:opacity-100"
+                          title="Canviar o personalitzar imatge de l'article"
+                        >
+                          <Camera className="w-3 h-3 text-cyan-400 group-hover:text-slate-950" />
+                          <span>Imatge</span>
+                        </button>
                       </div>
 
                       <div className="p-5 flex-1 flex flex-col justify-between">
@@ -6239,6 +6268,7 @@ export default function Dashboard({ user, onLogout, onBackToSite }) {
         isOpen={!!selectedProductModal}
         onClose={() => setSelectedProductModal(null)}
         onUpdateStock={handleUpdateStock}
+        onUpdateImage={handleUpdateImage}
       />
 
     </div>

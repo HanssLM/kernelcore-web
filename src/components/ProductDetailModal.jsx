@@ -1,18 +1,82 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { 
   X, Copy, Check, ShieldCheck, 
   MapPin, Truck, Building2, UserCheck, 
-  Plus, Minus, ArrowUpRight, Barcode, QrCode
+  Plus, Minus, ArrowUpRight, Barcode, QrCode,
+  Upload, Camera, Link as LinkIcon, RotateCcw
 } from 'lucide-react';
-import { getProductImage, getWarehouseLocation, getOfficialSupplier, getAssignedTechLead } from '../data/productImages';
+import { 
+  getProductImage, 
+  getWarehouseLocation, 
+  getOfficialSupplier, 
+  getAssignedTechLead,
+  saveCustomProductImage,
+  removeCustomProductImage,
+  getCustomImages
+} from '../data/productImages';
 
-export default function ProductDetailModal({ item, isOpen, onClose, onUpdateStock, onAddToQuote }) {
+function compressImageFile(file, maxWidth = 800, maxHeight = 600, quality = 0.82) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onerror = reject;
+    reader.onload = (e) => {
+      const img = new window.Image();
+      img.onerror = reject;
+      img.onload = () => {
+        let width = img.width;
+        let height = img.height;
+
+        if (width > maxWidth) {
+          height = Math.round((height * maxWidth) / width);
+          width = maxWidth;
+        }
+        if (height > maxHeight) {
+          width = Math.round((width * maxHeight) / height);
+          height = maxHeight;
+        }
+
+        const canvas = document.createElement('canvas');
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, width, height);
+        const dataUrl = canvas.toDataURL('image/jpeg', quality);
+        resolve(dataUrl);
+      };
+      img.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
+export default function ProductDetailModal({ item, isOpen, onClose, onUpdateStock, onAddToQuote, onUpdateImage }) {
   const [copiedSku, setCopiedSku] = useState(false);
   const [activeTab, setActiveTab] = useState('specs'); // 'specs', 'logistics', 'pricing'
+  const [localCustomImage, setLocalCustomImage] = useState(null);
+  const [trackedItemId, setTrackedItemId] = useState(item?.id);
+  const [urlInput, setUrlInput] = useState('');
+  const [showUrlBox, setShowUrlBox] = useState(false);
+  const [isProcessing, setIsProcessing] = useState(false);
+  const [feedbackMsg, setFeedbackMsg] = useState(null);
+  const fileInputRef = useRef(null);
+
+  if (item && item.id !== trackedItemId) {
+    setTrackedItemId(item.id);
+    setLocalCustomImage(null);
+    setShowUrlBox(false);
+    setUrlInput('');
+    setFeedbackMsg(null);
+  }
 
   if (!isOpen || !item) return null;
 
-  const imageUrl = getProductImage(item);
+  const customImgs = typeof window !== 'undefined' ? getCustomImages() : {};
+  const storedCustom = item.custom_image || (item.sku && customImgs[item.sku]) || (item.id && customImgs[item.id]);
+  const currentImageUrl = localCustomImage !== null 
+    ? (localCustomImage === '' ? getProductImage({ ...item, custom_image: null }) : localCustomImage)
+    : (storedCustom || getProductImage(item));
+  const hasCustomImg = localCustomImage !== null ? localCustomImage !== '' : Boolean(storedCustom);
+
   const location = getWarehouseLocation(item);
   const supplier = getOfficialSupplier(item);
   const techLead = getAssignedTechLead(item);
@@ -35,6 +99,65 @@ export default function ProductDetailModal({ item, isOpen, onClose, onUpdateStoc
       navigator.clipboard.writeText(item.sku);
       setCopiedSku(true);
       setTimeout(() => setCopiedSku(false), 2000);
+    }
+  };
+
+  const handleFileUpload = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    try {
+      setIsProcessing(true);
+      const compressedDataUrl = await compressImageFile(file);
+      const key = item.sku || String(item.id);
+      saveCustomProductImage(key, compressedDataUrl);
+      if (item.sku && item.id) {
+        saveCustomProductImage(String(item.id), compressedDataUrl);
+      }
+      setLocalCustomImage(compressedDataUrl);
+      setFeedbackMsg("Imatge de l'article pujada i desada correctament.");
+      setTimeout(() => setFeedbackMsg(null), 3500);
+      if (onUpdateImage) {
+        onUpdateImage(item.id, compressedDataUrl);
+      }
+    } catch (err) {
+      console.error('Error processant la imatge:', err);
+      setFeedbackMsg("Error en processar la imatge seleccionada.");
+    } finally {
+      setIsProcessing(false);
+      if (fileInputRef.current) fileInputRef.current.value = '';
+    }
+  };
+
+  const handleSaveUrl = (e) => {
+    e.preventDefault();
+    if (!urlInput.trim()) return;
+    const key = item.sku || String(item.id);
+    const trimmed = urlInput.trim();
+    saveCustomProductImage(key, trimmed);
+    if (item.sku && item.id) {
+      saveCustomProductImage(String(item.id), trimmed);
+    }
+    setLocalCustomImage(trimmed);
+    setUrlInput('');
+    setShowUrlBox(false);
+    setFeedbackMsg("Enllaç d'imatge assignat correctament a l'article.");
+    setTimeout(() => setFeedbackMsg(null), 3500);
+    if (onUpdateImage) {
+      onUpdateImage(item.id, trimmed);
+    }
+  };
+
+  const handleResetImage = () => {
+    const key = item.sku || String(item.id);
+    removeCustomProductImage(key);
+    if (item.id) removeCustomProductImage(String(item.id));
+    if (item.sku) removeCustomProductImage(item.sku);
+    setLocalCustomImage('');
+    setFeedbackMsg("S'ha restablert la imatge original de fàbrica.");
+    setTimeout(() => setFeedbackMsg(null), 3500);
+    if (onUpdateImage) {
+      onUpdateImage(item.id, null);
     }
   };
 
@@ -81,44 +204,130 @@ export default function ProductDetailModal({ item, isOpen, onClose, onUpdateStoc
         <div className="flex-1 overflow-y-auto p-6 space-y-6">
           {/* Bloc Superior: Imatge HD + Dades Primàries */}
           <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-start">
-            {/* Imatge de l'article amb estil corporatiu */}
-            <div className="md:col-span-5 bg-slate-950 rounded-2xl border border-slate-800 overflow-hidden relative group">
-              <div className="aspect-[4/3] w-full overflow-hidden bg-slate-950/50 flex items-center justify-center p-3">
-                <img 
-                  src={imageUrl} 
-                  alt={item.name} 
-                  className="w-full h-full object-cover rounded-xl transition-transform duration-500 group-hover:scale-105"
-                  loading="lazy"
-                  onError={(e) => {
-                    e.currentTarget.onerror = null;
-                    e.currentTarget.src = 'https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&w=800&q=85';
-                  }}
-                />
-              </div>
+            {/* Imatge de l'article amb estil corporatiu i gestió de càrrega */}
+            <div className="md:col-span-5 space-y-3">
+              <div className="bg-slate-950 rounded-2xl border border-slate-800 overflow-hidden relative group shadow-lg">
+                <div className="aspect-[4/3] w-full overflow-hidden bg-slate-950/50 flex items-center justify-center p-3">
+                  <img 
+                    src={currentImageUrl} 
+                    alt={item.name} 
+                    className="w-full h-full object-cover rounded-xl transition-transform duration-500 group-hover:scale-105"
+                    loading="lazy"
+                    onError={(e) => {
+                      e.currentTarget.onerror = null;
+                      e.currentTarget.src = 'https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&w=800&q=85';
+                    }}
+                  />
+                </div>
 
-              {/* Distintiu d'Estat d'Estoc sobre la imatge */}
-              <div className="absolute top-3 left-3">
-                {item.stock > 0 ? (
-                  <span className="px-2.5 py-1 rounded-lg text-xs font-bold font-mono bg-emerald-500/90 text-slate-950 shadow-md backdrop-blur-sm">
-                    {item.stock} uds. en estoc
-                  </span>
-                ) : (
-                  <span className="px-2.5 py-1 rounded-lg text-xs font-bold font-mono bg-cyan-500/90 text-slate-950 shadow-md backdrop-blur-sm">
-                    Sota comanda 24h
-                  </span>
+                {/* Distintiu si és una imatge personalitzada pujada */}
+                {hasCustomImg && (
+                  <div className="absolute top-3 right-3">
+                    <span className="px-2 py-0.5 rounded-md text-[10px] font-bold font-mono bg-cyan-500 text-slate-950 shadow-md">
+                      Imatge pròpia
+                    </span>
+                  </div>
                 )}
+
+                {/* Distintiu d'Estat d'Estoc sobre la imatge */}
+                <div className="absolute top-3 left-3">
+                  {item.stock > 0 ? (
+                    <span className="px-2.5 py-1 rounded-lg text-xs font-bold font-mono bg-emerald-500/90 text-slate-950 shadow-md backdrop-blur-sm">
+                      {item.stock} uds. en estoc
+                    </span>
+                  ) : (
+                    <span className="px-2.5 py-1 rounded-lg text-xs font-bold font-mono bg-cyan-500/90 text-slate-950 shadow-md backdrop-blur-sm">
+                      Sota comanda 24h
+                    </span>
+                  )}
+                </div>
+
+                {/* Codi de barres representatiu al peu de la imatge */}
+                <div className="p-3 bg-slate-950/90 border-t border-slate-850 flex items-center justify-between text-[11px] text-slate-400 font-mono">
+                  <span className="flex items-center gap-1.5">
+                    <Barcode className="w-4 h-4 text-cyan-400" />
+                    EAN-13: 84370{String(item.id).padStart(7, '0')}
+                  </span>
+                  <span className="flex items-center gap-1 text-slate-500">
+                    <QrCode className="w-3.5 h-3.5" />
+                    DFactory BCN
+                  </span>
+                </div>
               </div>
 
-              {/* Codi de barres representatiu al peu de la imatge */}
-              <div className="p-3 bg-slate-950/90 border-t border-slate-850 flex items-center justify-between text-[11px] text-slate-400 font-mono">
-                <span className="flex items-center gap-1.5">
-                  <Barcode className="w-4 h-4 text-cyan-400" />
-                  EAN-13: 84370{String(item.id).padStart(7, '0')}
-                </span>
-                <span className="flex items-center gap-1 text-slate-500">
-                  <QrCode className="w-3.5 h-3.5" />
-                  DFactory BCN
-                </span>
+              {/* Panell de Càrrega i Gestió d'Imatge Personalitzada */}
+              <div className="p-3 bg-slate-950/80 rounded-2xl border border-slate-800 space-y-2.5">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-bold text-slate-300 flex items-center gap-1.5">
+                    <Camera className="w-3.5 h-3.5 text-cyan-400" />
+                    Imatge de l'Article
+                  </span>
+                  {hasCustomImg && (
+                    <button
+                      onClick={handleResetImage}
+                      className="text-[11px] text-rose-400 hover:text-rose-300 hover:underline flex items-center gap-1 transition-colors cursor-pointer"
+                      title="Eliminar imatge pròpia i restaurar per defecte"
+                    >
+                      <RotateCcw className="w-3 h-3" />
+                      Restablir original
+                    </button>
+                  )}
+                </div>
+
+                {/* Input de fitxer ocult */}
+                <input
+                  type="file"
+                  ref={fileInputRef}
+                  onChange={handleFileUpload}
+                  accept="image/png, image/jpeg, image/webp, image/svg+xml"
+                  className="hidden"
+                />
+
+                <div className="grid grid-cols-2 gap-2">
+                  <button
+                    type="button"
+                    onClick={() => fileInputRef.current?.click()}
+                    disabled={isProcessing}
+                    className="py-2 px-3 rounded-xl bg-cyan-500/15 hover:bg-cyan-500/25 border border-cyan-500/30 text-cyan-300 font-bold text-xs flex items-center justify-center gap-1.5 transition-all cursor-pointer disabled:opacity-50"
+                  >
+                    <Upload className="w-3.5 h-3.5" />
+                    <span>{isProcessing ? 'Processant...' : 'Pujar Imatge'}</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => setShowUrlBox(!showUrlBox)}
+                    className="py-2 px-3 rounded-xl bg-slate-850 hover:bg-slate-800 border border-slate-750 text-slate-200 font-bold text-xs flex items-center justify-center gap-1.5 transition-all cursor-pointer"
+                  >
+                    <LinkIcon className="w-3.5 h-3.5 text-slate-400" />
+                    <span>Pegar URL</span>
+                  </button>
+                </div>
+
+                {showUrlBox && (
+                  <form onSubmit={handleSaveUrl} className="pt-2 border-t border-slate-800 flex gap-2">
+                    <input
+                      type="url"
+                      value={urlInput}
+                      onChange={(e) => setUrlInput(e.target.value)}
+                      placeholder="https://fabricant.com/model.jpg"
+                      className="flex-1 bg-slate-900 border border-slate-750 rounded-lg px-2.5 py-1.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500 font-mono"
+                    />
+                    <button
+                      type="submit"
+                      className="px-3 py-1.5 bg-cyan-500 text-slate-950 font-bold text-xs rounded-lg hover:bg-cyan-400 transition-colors cursor-pointer"
+                    >
+                      Desar
+                    </button>
+                  </form>
+                )}
+
+                {feedbackMsg && (
+                  <div className="p-2 rounded-lg bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 text-[11px] font-medium flex items-center gap-1.5 animate-fadeIn">
+                    <Check className="w-3.5 h-3.5 shrink-0 text-emerald-400" />
+                    <span>{feedbackMsg}</span>
+                  </div>
+                )}
               </div>
             </div>
 

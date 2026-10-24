@@ -1,4 +1,4 @@
-// Catàleg d'imatges oficials extretes directament dels servidors i CDNs dels fabricants homologats per a les 1.882 referències reals de KernelCore
+// Catàleg d'imatges oficials i gestió de càrrega personalitzada d'imatges per a cada article de KernelCore
 
 export const OFFICIAL_MANUFACTURER_ASSETS = {
   // CISCO SYSTEMS (Oficial cisco.com CDN)
@@ -46,7 +46,7 @@ export const OFFICIAL_MANUFACTURER_ASSETS = {
   // SYNOLOGY (Oficial fileres.synology.com CDN)
   synology: {
     diskstation_ds: 'https://fileres.synology.com/images/ec/products/DS923+@2x.jpg',
-    rackstation_rs: 'https://i.dell.com/is/image/DellContent/content/dam/ss2/product-images/dell-enterprise-products/enterprise-systems/poweredge/poweredge-r250/ng/enterprise-servers-poweredge-r250-relativesize-500-ng.psd?fmt=png-alpha&wid=800'
+    rackstation_rs: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=800&q=85'
   },
 
   // WESTERN DIGITAL & SEAGATE (Oficials westerndigital.com & seagate.com CDN)
@@ -74,7 +74,14 @@ export const OFFICIAL_MANUFACTURER_ASSETS = {
     posiflex_xt3815: 'https://www.posiflex.com/upload/catalog_m/XT-3815-G2_FR__24B202nHfN.png'
   },
 
-  // PANDUIT & COMMSCOPE (Oficial Scene7 CDN)
+  // RACKS 19" (Armari Rack amb porta de vidre / Armari de terra)
+  racks: {
+    mural_glass: 'https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&w=800&q=85',
+    floor_rack: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=800&q=85',
+    pdu: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=800&q=85'
+  },
+
+  // PANDUIT & COMMSCOPE (CABLEJAT)
   cabling: {
     panduit_keystone: 'https://s7d9.scene7.com/is/image/panduitdm/110103031?wid=800',
     patch_blue: 'https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&w=800&q=85',
@@ -90,16 +97,69 @@ export const OFFICIAL_MANUFACTURER_ASSETS = {
   }
 };
 
-// ─── RESOLUCIÓ PRECISA D'IMATGE OFICIAL DEL FABRICANT ───────────────────────────
+// ─── GESTIÓ D'IMATGES PUJADES PER L'USUARI (LOCALSTORAGE & PERSISTÈNCIA) ─────────
+export function getCustomImages() {
+  if (typeof window === 'undefined') return {};
+  try {
+    return JSON.parse(localStorage.getItem('kernel_custom_product_images') || '{}');
+  } catch {
+    return {};
+  }
+}
+
+export function saveCustomProductImage(key, dataUrl) {
+  if (typeof window === 'undefined') return;
+  try {
+    const existing = getCustomImages();
+    existing[key] = dataUrl;
+    localStorage.setItem('kernel_custom_product_images', JSON.stringify(existing));
+    return existing;
+  } catch (e) {
+    console.error('Error desant imatge personalitzada:', e);
+  }
+}
+
+export function removeCustomProductImage(key) {
+  if (typeof window === 'undefined') return;
+  try {
+    const existing = getCustomImages();
+    delete existing[key];
+    localStorage.setItem('kernel_custom_product_images', JSON.stringify(existing));
+    return existing;
+  } catch (e) {
+    console.error('Error eliminant imatge personalitzada:', e);
+  }
+}
+
+// ─── RESOLUCIÓ D'IMATGE PRIORITZANT LES PUJADES PER L'USUARI ─────────────────────
 export function getProductImage(item) {
   if (!item) return OFFICIAL_MANUFACTURER_ASSETS.cabling.patch_blue;
+
+  // 1. PRIORITAT ABSOLUTA: Si l'usuari ha pujat una imatge per a aquest article
+  if (item.custom_image) return item.custom_image;
+
+  const customImages = getCustomImages();
+  if (item.sku && customImages[item.sku]) return customImages[item.sku];
+  if (item.id && customImages[item.id]) return customImages[item.id];
+  if (item.imatge_url) return item.imatge_url;
 
   const sku = (item.sku || '').toUpperCase();
   const name = (item.name || '').toLowerCase();
   const brand = (item.brand || '').toLowerCase();
   const cat = (item.category || '').toLowerCase();
 
-  // 1. CISCO SYSTEMS
+  // 2. ARMARIS RACK 19" (IMPORTANT: No assignar servidors Dell als racks)
+  if (cat.includes('rack') || brand.includes('legrand') || brand.includes('rackmatic')) {
+    if (name.includes('pdu') || name.includes('regleta')) {
+      return OFFICIAL_MANUFACTURER_ASSETS.racks.pdu;
+    }
+    if (name.includes('terra') || name.includes('42u') || name.includes('47u') || name.includes('22u')) {
+      return OFFICIAL_MANUFACTURER_ASSETS.racks.floor_rack;
+    }
+    return OFFICIAL_MANUFACTURER_ASSETS.racks.mural_glass;
+  }
+
+  // 3. CISCO SYSTEMS
   if (brand.includes('cisco')) {
     if (sku.includes('9200') || sku.includes('9300')) {
       return OFFICIAL_MANUFACTURER_ASSETS.cisco.catalyst_9200_9300;
@@ -110,7 +170,7 @@ export function getProductImage(item) {
     return OFFICIAL_MANUFACTURER_ASSETS.cisco.catalyst_1000;
   }
 
-  // 2. DELL POWEREDGE
+  // 4. DELL POWEREDGE (Només servidors Dell i peces Dell)
   if (brand.includes('dell')) {
     if (sku.includes('T150') || sku.includes('T350') || sku.includes('T550') || name.includes('torre')) {
       return OFFICIAL_MANUFACTURER_ASSETS.dell.poweredge_t350;
@@ -121,7 +181,7 @@ export function getProductImage(item) {
     return OFFICIAL_MANUFACTURER_ASSETS.dell.poweredge_r750;
   }
 
-  // 3. UBIQUITI UNIFI
+  // 5. UBIQUITI UNIFI
   if (brand.includes('ubiquiti')) {
     if (sku.includes('U6') || sku.includes('U7') || name.includes("punt d'accés")) {
       return OFFICIAL_MANUFACTURER_ASSETS.ubiquiti.u6_pro_ap;
@@ -132,7 +192,7 @@ export function getProductImage(item) {
     return OFFICIAL_MANUFACTURER_ASSETS.ubiquiti.switch_rack;
   }
 
-  // 4. HPE ARUBA
+  // 6. HPE ARUBA
   if (brand.includes('aruba') || brand.includes('hpe')) {
     if (sku.includes('AP') || name.includes("punt d'accés")) {
       return OFFICIAL_MANUFACTURER_ASSETS.aruba.ap22_wifi6;
@@ -140,7 +200,7 @@ export function getProductImage(item) {
     return OFFICIAL_MANUFACTURER_ASSETS.cisco.catalyst_1000;
   }
 
-  // 5. APC SCHNEIDER ELECTRIC
+  // 7. APC SCHNEIDER ELECTRIC
   if (brand.includes('apc') || brand.includes('schneider')) {
     if (sku.includes('SRT') || name.includes('on-line')) {
       return OFFICIAL_MANUFACTURER_ASSETS.apc.smart_ups_srt_online;
@@ -148,7 +208,7 @@ export function getProductImage(item) {
     return OFFICIAL_MANUFACTURER_ASSETS.apc.smart_ups_smt;
   }
 
-  // 6. SALICRU
+  // 8. SALICRU
   if (brand.includes('salicru')) {
     if (sku.includes('RT2') || name.includes('rt2')) {
       return OFFICIAL_MANUFACTURER_ASSETS.salicru.slc_twin_rt2;
@@ -156,7 +216,7 @@ export function getProductImage(item) {
     return OFFICIAL_MANUFACTURER_ASSETS.salicru.slc_twin_pro2;
   }
 
-  // 7. SYNOLOGY
+  // 9. SYNOLOGY
   if (brand.includes('synology')) {
     if (sku.includes('RS') || name.includes('rackstation')) {
       return OFFICIAL_MANUFACTURER_ASSETS.synology.rackstation_rs;
@@ -164,7 +224,7 @@ export function getProductImage(item) {
     return OFFICIAL_MANUFACTURER_ASSETS.synology.diskstation_ds;
   }
 
-  // 8. STORAGE (WESTERN DIGITAL & SEAGATE)
+  // 10. STORAGE (WESTERN DIGITAL & SEAGATE)
   if (brand.includes('western digital') || sku.includes('WD-RED') || name.includes('red pro')) {
     return OFFICIAL_MANUFACTURER_ASSETS.storage.wd_red_pro;
   }
@@ -175,7 +235,7 @@ export function getProductImage(item) {
     return OFFICIAL_MANUFACTURER_ASSETS.storage.seagate_exos;
   }
 
-  // 9. FLUKE NETWORKS
+  // 11. FLUKE NETWORKS
   if (brand.includes('fluke')) {
     if (sku.includes('DSX') || name.includes('certificador')) {
       return OFFICIAL_MANUFACTURER_ASSETS.fluke.dsx_cableanalyzer;
@@ -183,12 +243,12 @@ export function getProductImage(item) {
     return OFFICIAL_MANUFACTURER_ASSETS.fluke.microscanner2_poe;
   }
 
-  // 10. FORTINET
+  // 12. FORTINET
   if (brand.includes('fortinet')) {
     return OFFICIAL_MANUFACTURER_ASSETS.fortinet.fortigate_appliance;
   }
 
-  // 11. RETAIL TPV (ZEBRA, EPSON, POSIFLEX)
+  // 13. RETAIL TPV (ZEBRA, EPSON, POSIFLEX)
   if (cat.includes('retail') || cat.includes('tpv')) {
     if (brand.includes('zebra') || sku.includes('DS2208')) {
       return OFFICIAL_MANUFACTURER_ASSETS.retail.zebra_ds2208;
@@ -202,7 +262,7 @@ export function getProductImage(item) {
     return OFFICIAL_MANUFACTURER_ASSETS.retail.posiflex_xt3815;
   }
 
-  // 12. PANDUIT & COMMSCOPE (CABLEJAT)
+  // 14. PANDUIT & COMMSCOPE (CABLEJAT)
   if (cat.includes('cable') || cat.includes('cablejat')) {
     if (name.includes('keystone') || sku.includes('CJ6') || sku.includes('MGS400')) {
       return OFFICIAL_MANUFACTURER_ASSETS.cabling.panduit_keystone;
@@ -222,11 +282,6 @@ export function getProductImage(item) {
     if (name.includes('gris') || sku.includes('-GY') || sku.includes('-GRY')) return OFFICIAL_MANUFACTURER_ASSETS.cabling.patch_grey;
 
     return OFFICIAL_MANUFACTURER_ASSETS.cabling.patch_blue;
-  }
-
-  // 13. RACKS
-  if (cat.includes('rack')) {
-    return OFFICIAL_MANUFACTURER_ASSETS.dell.poweredge_r750;
   }
 
   return OFFICIAL_MANUFACTURER_ASSETS.cabling.patch_blue;
