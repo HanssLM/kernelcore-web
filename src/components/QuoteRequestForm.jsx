@@ -414,7 +414,7 @@ export default function QuoteRequestForm({ onOpenLegal }) {
                     <div className="bg-slate-900/80 border border-slate-800 rounded-xl p-3">
                       <div className="flex justify-between items-center text-xs mb-2">
                         <span className="text-slate-300 font-medium">Estacions PC / TPV (120W)</span>
-                        <span className="font-mono font-bold text-cyan-400">{upsDevices.pcs} u.</span>
+                        <span className="font-mono font-bold text-cyan-400">{upsDevices.pcs} uds.</span>
                       </div>
                       <input
                         type="range"
@@ -429,7 +429,7 @@ export default function QuoteRequestForm({ onOpenLegal }) {
                     <div className="bg-slate-900/80 border border-slate-800 rounded-xl p-3">
                       <div className="flex justify-between items-center text-xs mb-2">
                         <span className="text-slate-300 font-medium">Servidors Rack/Torre (350W)</span>
-                        <span className="font-mono font-bold text-cyan-400">{upsDevices.servers} u.</span>
+                        <span className="font-mono font-bold text-cyan-400">{upsDevices.servers} uds.</span>
                       </div>
                       <input
                         type="range"
@@ -444,7 +444,7 @@ export default function QuoteRequestForm({ onOpenLegal }) {
                     <div className="bg-slate-900/80 border border-slate-800 rounded-xl p-3">
                       <div className="flex justify-between items-center text-xs mb-2">
                         <span className="text-slate-300 font-medium">Switches PoE & Routers (65W)</span>
-                        <span className="font-mono font-bold text-cyan-400">{upsDevices.switches} u.</span>
+                        <span className="font-mono font-bold text-cyan-400">{upsDevices.switches} uds.</span>
                       </div>
                       <input
                         type="range"

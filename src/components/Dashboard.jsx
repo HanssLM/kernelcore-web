@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import QuotationHub from './QuotationHub';
+import ProductDetailModal from './ProductDetailModal';
+import { getProductImage } from '../data/productImages';
 import { initialDashboardData } from '../data/dashboardMockData';
 import { 
   LayoutDashboard, FileText, FolderKanban, Package, LifeBuoy,
@@ -591,6 +593,7 @@ export default function Dashboard({ user, onLogout, onBackToSite }) {
   const [selectedRequest, setSelectedRequest] = useState(null);
   const [showQuotationHub, setShowQuotationHub] = useState(false);
   const [viewRequest, setViewRequest] = useState(null);
+  const [selectedProductModal, setSelectedProductModal] = useState(null);
 
   // ─── ESTATS DE 'EL MEU PERFIL' ──────────────────────────────────────────────
   const [pwdForm, setPwdForm] = useState({ current: '', newPwd: '', confirmPwd: '' });
@@ -998,6 +1001,16 @@ export default function Dashboard({ user, onLogout, onBackToSite }) {
     setInventory(inventory.map(item =>
       item.id === itemId ? { ...item, stock: Math.max(0, item.stock + delta) } : item
     ));
+
+    if (selectedProductModal && selectedProductModal.id === itemId) {
+      setSelectedProductModal(prev => prev ? { ...prev, stock: Math.max(0, prev.stock + delta) } : null);
+    }
+
+    if (isSupabaseConfigured && supabase) {
+      const current = inventory.find(i => i.id === itemId);
+      const newStock = Math.max(0, (current?.stock || 0) + delta);
+      supabase.from('inventari_maquinari').update({ estoc_actual: newStock }).eq('id_article', itemId).then(() => {});
+    }
 
     try {
       await fetch(`${API_BASE}/inventari/${itemId}/stock`, {
@@ -2322,7 +2335,7 @@ export default function Dashboard({ user, onLogout, onBackToSite }) {
                 { 
                   label: 'Capital Actius en Estoc', 
                   value: `${Math.round(totalInventoryValuation / 1000)}k €`, 
-                  sub: `${Math.round(totalInventoryValuation).toLocaleString('ca-ES')} € · ${totalInventoryUnits.toLocaleString('ca-ES')} u. físiques`, 
+                  sub: `${Math.round(totalInventoryValuation).toLocaleString('ca-ES')} € · ${totalInventoryUnits.toLocaleString('ca-ES')} uds. físiques`, 
                   color: 'text-emerald-400',
                   action: () => setActiveTab('inventory')
                 },
@@ -3438,7 +3451,7 @@ export default function Dashboard({ user, onLogout, onBackToSite }) {
                         </div>
                         <div>
                           <span className="text-slate-400 block">Estoc Físic:</span>
-                          <span className="text-lg font-black font-mono text-white">{supplierTotalUnits} u.</span>
+                          <span className="text-lg font-black font-mono text-white">{supplierTotalUnits} uds.</span>
                         </div>
                         <div className="text-right">
                           <span className="text-slate-400 block">Capital en Estoc:</span>
@@ -4034,7 +4047,7 @@ export default function Dashboard({ user, onLogout, onBackToSite }) {
                   </div>
                   <div className="flex items-center gap-1.5">
                     <span className="text-slate-500 font-semibold uppercase text-[10px] tracking-wider">Unitats en Estoc:</span>
-                    <span className="font-bold text-emerald-400 font-mono text-sm">{filteredUnits.toLocaleString('ca-ES')}</span>
+                    <span className="font-bold text-emerald-400 font-mono text-sm">{filteredUnits.toLocaleString('ca-ES')} uds.</span>
                   </div>
                   <div className="flex items-center gap-1.5">
                     <span className="text-slate-500 font-semibold uppercase text-[10px] tracking-wider">Valoració Filtrada:</span>
@@ -4042,7 +4055,7 @@ export default function Dashboard({ user, onLogout, onBackToSite }) {
                   </div>
                   <div className="flex items-center gap-1.5">
                     <span className="text-slate-500 font-semibold uppercase text-[10px] tracking-wider">Cost Mitjà:</span>
-                    <span className="font-mono text-slate-200 text-xs">{filteredAvgPrice.toLocaleString('ca-ES')} € / u.</span>
+                    <span className="font-mono text-slate-200 text-xs">{filteredAvgPrice.toLocaleString('ca-ES')} € / ud.</span>
                   </div>
                 </div>
 
@@ -4200,95 +4213,141 @@ export default function Dashboard({ user, onLogout, onBackToSite }) {
                     : (item.tier || '').includes('Mitjà')
                       ? 'bg-cyan-500/15 text-cyan-300 border-cyan-500/30'
                       : 'bg-purple-500/15 text-purple-300 border-purple-500/30';
+                  const itemImg = getProductImage(item);
 
                   return (
                     <div 
                       key={item.id} 
-                      className={`bg-slate-900/80 border rounded-2xl p-5 flex flex-col justify-between transition-all hover:border-slate-700 shadow-md ${
+                      className={`group bg-slate-900/80 border rounded-2xl overflow-hidden flex flex-col justify-between transition-all hover:border-cyan-500/40 hover:shadow-xl hover:shadow-cyan-950/20 ${
                         isLow ? 'border-amber-500/50 bg-amber-500/5' : 'border-slate-800'
                       }`}
                     >
-                      <div>
-                        {/* Encapçalament: SKU + Marca + Tier */}
-                        <div className="flex items-center justify-between gap-2 mb-2.5">
-                          <span className="font-mono text-xs font-bold text-cyan-400 bg-cyan-950/80 px-2.5 py-0.5 rounded-md border border-cyan-800/80">
+                      {/* Imatge de l'article amb botó d'accés directe a la fitxa */}
+                      <div 
+                        onClick={() => setSelectedProductModal(item)}
+                        className="relative aspect-[16/9] w-full bg-slate-950 overflow-hidden cursor-pointer"
+                        title="Fes clic per veure la fitxa tècnica completa"
+                      >
+                        <img 
+                          src={itemImg} 
+                          alt={item.name} 
+                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                          loading="lazy"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent opacity-80" />
+
+                        {/* Badges sobre la imatge */}
+                        <div className="absolute top-3 left-3 flex items-center gap-1.5 flex-wrap">
+                          <span className="font-mono text-xs font-bold text-cyan-300 bg-slate-950/90 px-2.5 py-0.5 rounded-md border border-cyan-800/80 backdrop-blur-sm">
                             {item.sku || `SKU-${item.id}`}
                           </span>
-                          <div className="flex items-center gap-1.5 flex-wrap">
-                            <span className="text-xs px-2.5 py-1 rounded-md bg-slate-800 text-white font-bold border border-slate-700">
-                              {item.brand || 'KernelCore'}
-                            </span>
-                            <span className={`text-xs px-2.5 py-1 rounded-md font-bold border ${tierColor}`}>
-                              {item.tier || 'Standard'}
-                            </span>
-                          </div>
                         </div>
 
-                        {/* Nom del producte */}
-                        <h4 className="text-base font-bold text-white leading-snug mb-1">
-                          {item.name}
-                        </h4>
-                        <p className="text-xs text-slate-400 font-medium mb-3 flex items-center gap-1.5">
-                          <Tag className="w-3.5 h-3.5 text-slate-500" />
-                          <span>{item.category}</span>
-                        </p>
-
-                        {/* Mètriques de cost i valoració del lot */}
-                        <div className="p-3.5 rounded-xl bg-slate-950 border border-slate-850 grid grid-cols-2 gap-3 text-xs mb-4">
-                          <div>
-                            <span className="text-slate-400 block text-xs font-medium">Cost Unitari:</span>
-                            <span className="text-base font-bold font-mono text-slate-200">{item.price} €</span>
-                          </div>
-                          <div className="text-right">
-                            <span className="text-slate-400 block text-xs font-medium">Valor Lot en Estoc:</span>
-                            <span className="text-base font-black font-mono text-emerald-400">
-                              {lotValuation.toLocaleString('ca-ES')} €
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* Controls d'Estoc i reposició ràpida */}
-                      <div className="pt-3 border-t border-slate-800/80 flex items-center justify-between gap-3">
-                        <div>
-                          <span className="text-xs text-slate-400 block font-medium">Unitats Físiques:</span>
-                          <span className={`text-2xl font-black font-mono ${isLow ? 'text-amber-400' : 'text-white'}`}>
-                            {item.stock} <span className="text-sm font-normal text-slate-400">u.</span>
+                        <div className="absolute top-3 right-3 flex items-center gap-1.5">
+                          <span className="text-xs px-2 py-0.5 rounded-md bg-slate-950/90 text-white font-bold border border-slate-700 backdrop-blur-sm">
+                            {item.brand || 'KernelCore'}
                           </span>
                         </div>
 
-                        <div className="flex items-center gap-1.5">
-                          <button
-                            onClick={() => handleUpdateStock(item.id, -1)}
-                            className="w-8 h-8 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 flex items-center justify-center font-bold text-sm border border-slate-700 transition-colors"
-                            title="Restar 1 unitat"
-                          >
-                            -
-                          </button>
-                          <button
-                            onClick={() => handleUpdateStock(item.id, 1)}
-                            className="w-8 h-8 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 flex items-center justify-center font-bold text-sm border border-slate-700 transition-colors"
-                            title="Afegir 1 unitat"
-                          >
-                            +1
-                          </button>
-                          <button
-                            onClick={() => handleUpdateStock(item.id, 5)}
-                            className="px-2.5 h-8 rounded-lg bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 font-bold text-xs border border-cyan-500/40 transition-colors"
-                            title="Reposició ràpida +5 unitats"
-                          >
-                            +5
-                          </button>
-                          <button
-                            onClick={() => handleUpdateStock(item.id, 10)}
-                            className="px-2.5 h-8 rounded-lg bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 font-bold text-xs border border-emerald-500/40 transition-colors"
-                            title="Reposició ràpida +10 unitats"
-                          >
-                            +10
-                          </button>
+                        {/* Distintiu d'estoc inferior a la foto */}
+                        <div className="absolute bottom-2.5 left-3 flex items-center gap-2">
+                          {item.stock > 0 ? (
+                            <span className="px-2 py-0.5 rounded text-[11px] font-bold font-mono bg-emerald-500/90 text-slate-950">
+                              {item.stock} uds. disponibles
+                            </span>
+                          ) : (
+                            <span className="px-2 py-0.5 rounded text-[11px] font-bold font-mono bg-cyan-500/90 text-slate-950">
+                              Sota comanda 24h
+                            </span>
+                          )}
+                          <span className={`text-[10px] px-2 py-0.5 rounded font-bold border backdrop-blur-sm ${tierColor}`}>
+                            {item.tier || 'Standard'}
+                          </span>
                         </div>
                       </div>
 
+                      <div className="p-5 flex-1 flex flex-col justify-between">
+                        <div>
+                          {/* Nom del producte clicable */}
+                          <h4 
+                            onClick={() => setSelectedProductModal(item)}
+                            className="text-base font-bold text-white leading-snug mb-1 hover:text-cyan-400 transition-colors cursor-pointer"
+                            title="Obrir fitxa detallada de l'article"
+                          >
+                            {item.name}
+                          </h4>
+                          <p className="text-xs text-slate-400 font-medium mb-3 flex items-center gap-1.5">
+                            <Tag className="w-3.5 h-3.5 text-slate-500" />
+                            <span>{item.category}</span>
+                          </p>
+
+                          {/* Mètriques de cost i valoració del lot */}
+                          <div className="p-3.5 rounded-xl bg-slate-950 border border-slate-850 grid grid-cols-2 gap-3 text-xs mb-3">
+                            <div>
+                              <span className="text-slate-400 block text-xs font-medium">Cost Unitari:</span>
+                              <span className="text-base font-bold font-mono text-slate-200">{item.price} €</span>
+                            </div>
+                            <div className="text-right">
+                              <span className="text-slate-400 block text-xs font-medium">Valor Lot en Estoc:</span>
+                              <span className="text-base font-black font-mono text-emerald-400">
+                                {lotValuation.toLocaleString('ca-ES')} €
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Controls d'Estoc i botó de fitxa */}
+                        <div className="pt-3 border-t border-slate-800/80 space-y-3">
+                          <div className="flex items-center justify-between gap-3">
+                            <div>
+                              <span className="text-xs text-slate-400 block font-medium">Unitats Físiques:</span>
+                              <span className={`text-xl font-black font-mono ${isLow ? 'text-amber-400' : 'text-white'}`}>
+                                {item.stock} <span className="text-xs font-normal text-slate-400">uds.</span>
+                              </span>
+                            </div>
+
+                            <div className="flex items-center gap-1.5">
+                              <button
+                                onClick={() => handleUpdateStock(item.id, -1)}
+                                className="w-7 h-7 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 flex items-center justify-center font-bold text-sm border border-slate-700 transition-colors cursor-pointer"
+                                title="Restar 1 unitat"
+                              >
+                                -
+                              </button>
+                              <button
+                                onClick={() => handleUpdateStock(item.id, 1)}
+                                className="w-7 h-7 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 flex items-center justify-center font-bold text-sm border border-slate-700 transition-colors cursor-pointer"
+                                title="Afegir 1 unitat"
+                              >
+                                +1
+                              </button>
+                              <button
+                                onClick={() => handleUpdateStock(item.id, 5)}
+                                className="px-2 h-7 rounded-lg bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 font-bold text-xs border border-cyan-500/40 transition-colors cursor-pointer"
+                                title="Reposició ràpida +5 unitats"
+                              >
+                                +5
+                              </button>
+                              <button
+                                onClick={() => handleUpdateStock(item.id, 10)}
+                                className="px-2 h-7 rounded-lg bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 font-bold text-xs border border-emerald-500/40 transition-colors cursor-pointer"
+                                title="Reposició ràpida +10 unitats"
+                              >
+                                +10
+                              </button>
+                            </div>
+                          </div>
+
+                          <button
+                            onClick={() => setSelectedProductModal(item)}
+                            className="w-full py-2 px-3 rounded-xl bg-slate-850 hover:bg-slate-800 border border-slate-750 text-slate-200 hover:text-white text-xs font-bold transition-all flex items-center justify-center gap-1.5 cursor-pointer"
+                          >
+                            <Eye className="w-3.5 h-3.5 text-cyan-400" />
+                            <span>Veure Fitxa Tècnica & Logística</span>
+                          </button>
+                        </div>
+
+                      </div>
                     </div>
                   );
                 })}
@@ -4302,6 +4361,7 @@ export default function Dashboard({ user, onLogout, onBackToSite }) {
                   <table className="w-full text-left text-sm text-slate-300">
                     <thead className="bg-slate-950/80 text-xs font-bold text-slate-400 uppercase tracking-wider border-b border-slate-800">
                       <tr>
+                        <th className="py-3.5 px-3 text-center">Foto</th>
                         <th className="py-3.5 px-4">SKU</th>
                         <th className="py-3.5 px-4">Producte & Referència</th>
                         <th className="py-3.5 px-4">Marca & Gama</th>
@@ -4309,7 +4369,7 @@ export default function Dashboard({ user, onLogout, onBackToSite }) {
                         <th className="py-3.5 px-4 text-right">Cost Unitari</th>
                         <th className="py-3.5 px-4 text-center">Estoc Físic</th>
                         <th className="py-3.5 px-4 text-right">Valor Lot</th>
-                        <th className="py-3.5 px-4 text-center">Reposició Ràpida</th>
+                        <th className="py-3.5 px-4 text-center">Accions & Reposició</th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-slate-800/70">
@@ -4321,15 +4381,35 @@ export default function Dashboard({ user, onLogout, onBackToSite }) {
                           : (item.tier || '').includes('Mitjà')
                             ? 'bg-cyan-500/15 text-cyan-300 border-cyan-500/30'
                             : 'bg-purple-500/15 text-purple-300 border-purple-500/30';
+                        const itemImg = getProductImage(item);
 
                         return (
                           <tr key={item.id} className="hover:bg-slate-850/60 transition-colors">
+                            <td className="py-2.5 px-3 text-center">
+                              <div 
+                                onClick={() => setSelectedProductModal(item)}
+                                className="w-12 h-9 rounded-lg bg-slate-950 overflow-hidden border border-slate-800 mx-auto cursor-pointer hover:border-cyan-400 transition-colors"
+                                title="Veure fitxa"
+                              >
+                                <img src={itemImg} alt="" className="w-full h-full object-cover" loading="lazy" />
+                              </div>
+                            </td>
                             <td className="py-3.5 px-4 font-mono font-bold text-xs text-cyan-400">
-                              {item.sku || `SKU-${item.id}`}
+                              <button 
+                                onClick={() => setSelectedProductModal(item)}
+                                className="hover:underline text-left cursor-pointer"
+                              >
+                                {item.sku || `SKU-${item.id}`}
+                              </button>
                             </td>
                             <td className="py-3.5 px-4">
-                              <span className="font-bold text-white block text-sm">{item.name}</span>
-                              <span className="text-xs text-slate-500">Mínim de seguretat: {item.min} u.</span>
+                              <button
+                                onClick={() => setSelectedProductModal(item)}
+                                className="font-bold text-white block text-sm hover:text-cyan-400 text-left transition-colors cursor-pointer"
+                              >
+                                {item.name}
+                              </button>
+                              <span className="text-xs text-slate-500">Mínim de seguretat: {item.min} uds.</span>
                             </td>
                             <td className="py-3.5 px-4 whitespace-nowrap">
                               <div className="flex items-center gap-1.5">
@@ -4351,7 +4431,7 @@ export default function Dashboard({ user, onLogout, onBackToSite }) {
                               <span className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-lg font-mono font-bold text-sm ${
                                 isLow ? 'bg-amber-500/20 text-amber-300 border border-amber-500/40' : 'bg-slate-800 text-white'
                               }`}>
-                                {item.stock} u.
+                                {item.stock} uds.
                                 {isLow && <span className="text-[10px] text-amber-400 font-bold uppercase">ALERTA</span>}
                               </span>
                             </td>
@@ -4360,6 +4440,13 @@ export default function Dashboard({ user, onLogout, onBackToSite }) {
                             </td>
                             <td className="py-3.5 px-4 text-center">
                               <div className="inline-flex items-center gap-1">
+                                <button
+                                  onClick={() => setSelectedProductModal(item)}
+                                  className="w-7 h-7 rounded bg-cyan-950/80 hover:bg-cyan-900 text-cyan-400 flex items-center justify-center font-bold text-xs border border-cyan-800/80 transition-colors cursor-pointer"
+                                  title="Veure fitxa tècnica de l'article"
+                                >
+                                  <Eye className="w-3.5 h-3.5" />
+                                </button>
                                 <button
                                   onClick={() => handleUpdateStock(item.id, -1)}
                                   className="w-7 h-7 rounded bg-slate-800 hover:bg-slate-700 text-slate-200 flex items-center justify-center font-bold text-xs border border-slate-700"
@@ -6132,6 +6219,14 @@ export default function Dashboard({ user, onLogout, onBackToSite }) {
         </div>
       )}
 
+
+      {/* Modal de Fitxa Tècnica i Detall d'Article */}
+      <ProductDetailModal
+        item={selectedProductModal}
+        isOpen={!!selectedProductModal}
+        onClose={() => setSelectedProductModal(null)}
+        onUpdateStock={handleUpdateStock}
+      />
 
     </div>
   );
