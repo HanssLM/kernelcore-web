@@ -4233,6 +4233,10 @@ export default function Dashboard({ user, onLogout, onBackToSite }) {
                           alt={item.name} 
                           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                           loading="lazy"
+                          onError={(e) => {
+                            e.currentTarget.onerror = null;
+                            e.currentTarget.src = 'https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&w=800&q=85';
+                          }}
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent opacity-80" />
 
@@ -4391,7 +4395,16 @@ export default function Dashboard({ user, onLogout, onBackToSite }) {
                                 className="w-12 h-9 rounded-lg bg-slate-950 overflow-hidden border border-slate-800 mx-auto cursor-pointer hover:border-cyan-400 transition-colors"
                                 title="Veure fitxa"
                               >
-                                <img src={itemImg} alt="" className="w-full h-full object-cover" loading="lazy" />
+                                <img 
+                                  src={itemImg} 
+                                  alt="" 
+                                  className="w-full h-full object-cover" 
+                                  loading="lazy" 
+                                  onError={(e) => {
+                                    e.currentTarget.onerror = null;
+                                    e.currentTarget.src = 'https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&w=800&q=85';
+                                  }}
+                                />
                               </div>
                             </td>
                             <td className="py-3.5 px-4 font-mono font-bold text-xs text-cyan-400">

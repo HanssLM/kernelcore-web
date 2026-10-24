@@ -89,6 +89,10 @@ export default function ProductDetailModal({ item, isOpen, onClose, onUpdateStoc
                   alt={item.name} 
                   className="w-full h-full object-cover rounded-xl transition-transform duration-500 group-hover:scale-105"
                   loading="lazy"
+                  onError={(e) => {
+                    e.currentTarget.onerror = null;
+                    e.currentTarget.src = 'https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&w=800&q=85';
+                  }}
                 />
               </div>
 
